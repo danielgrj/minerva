@@ -13,6 +13,7 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 const authRoutes = require('./routes/auth');
+const filesRoutes = require('./routes/files');
 
 mongoose
   .connect(process.env.DB, { useNewUrlParser: true })
@@ -34,15 +35,17 @@ app.use(
 );
 
 app.use('/api/auth', authRoutes);
+app.use('/api/files', filesRoutes);
 
 const { isLoggedin } = require('./middleware');
 
 io.use(isLoggedin);
 
-io.on('connection', client => {
-  client.on('signup', async (user, callback) => {});
+const { updateQuote } = require('./controllers/quotes.controller');
 
-  console.log('New socket connection');
+io.on('connection', client => {
+  client.on('editQuote', updateQuote(client));
+
   client.on('subscribeToTimer', interval => {
     console.log('client is subscribing to timer with interval ', interval);
     setInterval(() => {

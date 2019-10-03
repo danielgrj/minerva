@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { subscribeToTimer, signup } from './services/api';
 import AUTH_SERVICE from './services/auth';
 import Editor from './components/editor/Editor';
+import Quote from './components/Quote';
 
 export default class App extends Component {
   state = {
@@ -23,7 +24,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <Editor />
+        <Quote />
         <button onClick={signup}>Signup</button>
         <button onClick={this.logout}>Logout</button>
       </div>

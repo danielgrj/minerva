@@ -8,9 +8,8 @@ exports.isLogout = (req, res, next) => {
 
 exports.isLoggedin = async (socket, next) => {
   const { token } = socket.handshake.query;
-  console.log(token);
   const { _id } = jwt.verify(token, process.env.SECRET);
   const user = await User.findOne({ _id, 'tokens.token': token });
-
+  socket._id = _id;
   if (user) next();
 };

@@ -1,4 +1,4 @@
-const User = require('./../models/User');
+const User = require('../models/User');
 
 exports.login = async (req, res) => {
   const token = await req.user.generateAuthToken();
