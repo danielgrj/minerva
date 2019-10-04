@@ -5,6 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const socketio = require('socket.io');
 const mongoose = require('mongoose');
+const session = require('express-session');
 const passport = require('./config/passport');
 const cors = require('cors');
 
@@ -26,6 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(
   cors({
@@ -37,9 +39,9 @@ app.use(
 app.use('/api/auth', authRoutes);
 app.use('/api/files', filesRoutes);
 
-const { isLoggedin } = require('./middleware');
+const { loginSocket } = require('./middleware');
 
-io.use(isLoggedin);
+io.use(loginSocket);
 
 const { updateQuote } = require('./controllers/quotes.controller');
 

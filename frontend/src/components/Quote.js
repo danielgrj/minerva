@@ -15,7 +15,12 @@ export default class Quote extends Component {
   render() {
     return (
       <div className="quote-container">
-        <Editor handleSaved={savedQuote} handleUpdate={updateQuote} isQuote={true} id={this.state.id} handleId={this.handleId}/>
+        <Editor 
+          handleSaved={savedQuote} 
+          handleUpdate={updateQuote} 
+          isQuote={true} id={this.state.id} 
+          handleId={this.handleId}
+        />
       </div>
     )
   }
