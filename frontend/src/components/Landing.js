@@ -16,6 +16,8 @@ export default function Landing() {
         <div className="social">
           <Link className="facebook"><FontAwesomeIcon icon={faFacebookF} /></Link>
           <Link className="google"><FontAwesomeIcon icon={faGoogle} /></Link>
+          <a href="http://localhost:3000/api/auth/google/">Google</a>
+          <a href="http://localhost:3000/api/auth/facebook/">Facebook</a>
         </div>
       </div>
     </div>

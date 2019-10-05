@@ -2,7 +2,7 @@ const { model, Schema } = require('mongoose');
 
 const noteSchema = new Schema({
   name: String,
-  author: {
+  userFrom: {
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
@@ -10,7 +10,7 @@ const noteSchema = new Schema({
     type: String,
     required: true
   },
-  attchedTo: {
+  quoteFrom: {
     type: Schema.Types.ObjectId,
     ref: 'Quote'
   }

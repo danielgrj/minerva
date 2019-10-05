@@ -5,7 +5,7 @@ const colletionSchema = new Schema({
     type: String,
     required: true
   },
-  author: {
+  userFrom: {
     type: String,
     required: true
   },

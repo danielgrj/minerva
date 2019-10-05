@@ -1,9 +1,17 @@
 const { model, Schema } = require('mongoose');
 
 const quoteSchema = new Schema({
-  reference: {
+  referenceFrom: {
     type: Schema.Types.ObjectId,
     ref: 'Reference'
+  },
+  collectionFrom: {
+    type: Schema.Types.ObjectId,
+    ref: 'Collection'
+  },
+  userFrom: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   },
   body: {
     type: String,

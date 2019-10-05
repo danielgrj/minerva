@@ -5,6 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const socketio = require('socket.io');
 const mongoose = require('mongoose');
+const session = require('express-session');
 const passport = require('./config/passport');
 const cors = require('cors');
 
@@ -13,6 +14,7 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 const authRoutes = require('./routes/auth');
+const filesRoutes = require('./routes/files');
 
 mongoose
   .connect(process.env.DB, { useNewUrlParser: true })
@@ -25,6 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(
   cors({
@@ -34,15 +37,17 @@ app.use(
 );
 
 app.use('/api/auth', authRoutes);
+app.use('/api/files', filesRoutes);
 
-const { isLoggedin } = require('./middleware');
+const { loginSocket } = require('./middleware');
 
-io.use(isLoggedin);
+io.use(loginSocket);
+
+const { updateQuote } = require('./controllers/quotes.controller');
 
 io.on('connection', client => {
-  client.on('signup', async (user, callback) => {});
+  client.on('editQuote', updateQuote(client));
 
-  console.log('New socket connection');
   client.on('subscribeToTimer', interval => {
     console.log('client is subscribing to timer with interval ', interval);
     setInterval(() => {

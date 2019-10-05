@@ -2,6 +2,10 @@ const { model, Schema } = require('mongoose');
 
 const referenceSchema = new Schema(
   {
+    userFrom: {
+      type: Schema.Types.ObjectId,
+      required: true
+    },
     title: {
       type: String,
       required: true
@@ -15,7 +19,7 @@ const referenceSchema = new Schema(
     place: String,
     publisher: String,
     date: Date,
-    numberOfPage: Number,
+    numberOfPages: Number,
     language: String,
     isbn: String,
     url: String,
