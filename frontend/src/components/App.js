@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { subscribeToTimer, signup } from './services/api';
-import AUTH_SERVICE from './services/auth';
-import Editor from './components/editor/Editor';
-import Quote from './components/Quote';
+import { subscribeToTimer, signup } from '../services/api';
+import AUTH_SERVICE from '../services/auth';
+import Editor from './editor/Editor';
+import Quote from './editor/Quote';
 
 export default class App extends Component {
   state = {

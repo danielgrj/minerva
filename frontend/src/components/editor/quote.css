@@ -1,0 +1,96 @@
+.back-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(10, 10, 10, 0.3);
+  z-index: 1;
+}
+
+.quote-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.quote {
+  z-index: 3;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.4);
+  width: 50rem;
+  height: 30rem;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.quote-container::-webkit-scrollbar {
+  width: 12px; /* for vertical scrollbars */
+  height: 12px; /* for horizontal scrollbars */
+}
+
+.quote-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.quote-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.quote-menu button {
+  background: none;
+  border: none;
+  width: 0.6rem;
+  font-size: 1.8rem;
+}
+
+.upload-wrapper {
+  position: relative;
+  width: 2rem;
+}
+
+.upload-wrapper > button {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+}
+
+.upload-wrapper > input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.quote-enter {
+  transform: scale(0.1);
+}
+
+.quote-enter.quote-enter-active {
+  transform: scale(1);
+  transition: all 250ms ease-in-out;
+}
+
+.quote-leave {
+  transform: scale(1);
+}
+
+.quote-leave.quote-leave-active {
+  transform: scale(0.1);
+  transition: all 200ms ease-in-out;
+}

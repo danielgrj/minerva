@@ -1,13 +1,22 @@
 import React, { Component } from 'react'
-import { Editor as DraftEditor, EditorState, RichUtils, Modifier, convertToRaw, convertFromRaw, convertFromHTML, ContentState } from 'draft-js'
+import { 
+  Editor as DraftEditor, 
+  EditorState, 
+  RichUtils, 
+  Modifier, 
+  convertToRaw, 
+  convertFromRaw, 
+  convertFromHTML, 
+  ContentState 
+} from 'draft-js'
+import Camera from 'react-html5-camera-photo'
 import Tesseract from 'tesseract.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faImage, faBold, faItalic, faUnderline, faCamera } from '@fortawesome/free-solid-svg-icons'
+import { faImage, faBold, faItalic, faUnderline, faCamera, faFont } from '@fortawesome/free-solid-svg-icons'
 import FILES_SERVICE from './../../services/files'
+import 'react-html5-camera-photo/build/css/index.css';
 import './editor.css'
 import decorator from './decorator'
-
-
 
 export default class Editor extends Component {
   state = {
@@ -15,7 +24,8 @@ export default class Editor extends Component {
     imageUrl: '',
     isLoading: false,
     progress: 0,
-    id: this.props.id
+    id: this.props.id,
+    cameraActive: false
   }
 
   componentDidMount = () => {
@@ -53,21 +63,22 @@ export default class Editor extends Component {
 
   }
 
-  renderImage = () => {
-    if(this.state.imageUrl) return <div><img src={this.state.imageUrl} alt="Quote image"/></div>
+  handleCamera = () => {
+    this.setState({ cameraActive: true})
   }
 
-  renderQuoteMenu = () => {
-    if (true) return (
-    <div className="image">
-      <div className="image-wrapper">
-        <button><FontAwesomeIcon icon={faImage} /></button>
-        <input type="file" onChange={this.handleAttachment} />
-        <button onClick={this.handleAttachment}>Test</button>
-      </div>
-      <button><FontAwesomeIcon icon={faCamera} /></button>
-    </div>
-    )
+  handlePhoto = async (dataUri) => {
+    this.setState({ isLoading: true })
+
+    const result = await Tesseract
+      .recognize(dataUri, 'eng')
+      .progress((p) => {
+      })
+
+    Tesseract.terminate();
+    
+    console.log(result)
+    this.setState({ cameraActive: false, isLoading: false})
   }
 
   _onBoldClick = () => {
@@ -82,19 +93,18 @@ export default class Editor extends Component {
     this.editorOnChange(RichUtils.toggleInlineStyle(this.state.editorState, 'UNDERLINE'))
   }
 
+
   render() {
     return (
       <div className="min-editor">
-        <div className="menu">
-          <div className="styles">
+        <div className="menu-styles">
+          <button onClick><FontAwesomeIcon icon={faFont}/></button>
+          <div>
             <button onClick={this._onBoldClick}><FontAwesomeIcon icon={faBold} /></button>
             <button onClick={this._onItalicClick}><FontAwesomeIcon icon={faItalic} /></button>
             <button onClick={this._onUnderlineClick}><FontAwesomeIcon icon={faUnderline} /></button>
           </div>
-          {this.renderQuoteMenu()}
         </div>
-        {this.renderImage()}
-        {this.state.isLoading ? <div className="spin-circle"></div> : undefined}
         <DraftEditor 
           editorState={this.state.editorState} 
           onChange={this.editorOnChange} 

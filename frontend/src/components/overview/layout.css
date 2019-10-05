@@ -1,0 +1,103 @@
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.layout {
+  position: relative;
+  width: 100vw;
+  height: 92vh;
+  display: grid;
+  grid-template-columns: 30rem 1fr;
+  grid-template-rows: 1fr 25rem;
+  padding: 3rem 5rem;
+  gap: 3rem;
+  background-image: linear-gradient(to top right, rgba(0, 142, 204, 0.9), rgba(0, 142, 204, 0.7));
+}
+
+.route-container {
+  grid-column: 1 / -1;
+  grid-row: 1 /-1;
+}
+
+.route-container > div {
+  width: 100%;
+  height: 100%;
+}
+
+.collections {
+  grid-column: 1;
+  grid-row: 1;
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+}
+
+.references {
+  grid-column: 1;
+  grid-row: 2;
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+}
+
+.main-content {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1 / -1;
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+}
+
+.add-content {
+  position: absolute;
+  right: 3rem;
+  bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.add-content-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.add-content-buttons > div {
+  margin-bottom: 1rem;
+}
+
+.add-content button {
+  border: none;
+  background-color: rgba(0, 142, 204, 0.9);
+  border-radius: 50%;
+  color: #fff;
+  width: 5.2rem;
+  height: 5.2rem;
+  font-size: 2rem;
+}
+
+button:focus {
+  outline: none;
+}
+
+.plus-button-enter {
+  opacity: 0.01;
+}
+
+.plus-button-enter.plus-button-enter-active {
+  opacity: 1;
+  transition: all 250ms ease-in-out;
+}
+
+.plus-button-leave {
+  opacity: 1;
+}
+
+.plus-button-leave.plus-button-leave-active {
+  opacity: 0.01;
+  transition: all 200ms ease-in-out;
+}
