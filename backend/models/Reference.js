@@ -17,7 +17,16 @@ const referenceSchema = new Schema(
     type: {
       type: String,
       required: true,
-      enum: ['BOOK', 'ARTICLE']
+      enum: [
+        'BOOK',
+        'BOOK_SECTION',
+        'ENCYCLOPEDIA_ARTICLE',
+        'JOURNAL_ARTICLE',
+        'MAGAZINE_ARTICLE',
+        'NEWSPAPER_ARTICLE',
+        'THESIS',
+        'WEB_PAGE'
+      ]
     },
     volume: Number,
     edition: Number,
@@ -28,6 +37,7 @@ const referenceSchema = new Schema(
     language: String,
     isbn: String,
     url: String,
+    doi: String,
     accessed: Date,
     archive: String
   },

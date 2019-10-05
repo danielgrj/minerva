@@ -2,6 +2,7 @@ const Reference = require('./../models/Reference');
 
 exports.createReference = async (req, res) => {
   const {
+    type,
     title,
     author,
     volumen,
@@ -12,12 +13,15 @@ exports.createReference = async (req, res) => {
     numberOfPages,
     language,
     isbn,
+    url,
+    doi,
     accessed,
     archive
   } = req.body;
   const { id: userFrom } = req.user;
 
   const reference = await Reference.create({
+    type,
     userFrom,
     title,
     author,
@@ -29,6 +33,8 @@ exports.createReference = async (req, res) => {
     numberOfPages,
     language,
     isbn,
+    url,
+    doi,
     accessed,
     archive
   });
@@ -59,6 +65,7 @@ exports.updateReference = async (req, res) => {
   const { id: userFrom } = req.user;
 
   const allowedUpdates = [
+    'type',
     'title',
     'author',
     'volumen',
@@ -69,6 +76,8 @@ exports.updateReference = async (req, res) => {
     'numberOfPages',
     'language',
     'isbn',
+    'url',
+    'doi',
     'accessed',
     'archive'
   ];

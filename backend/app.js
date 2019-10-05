@@ -9,12 +9,17 @@ const session = require('express-session');
 const passport = require('./config/passport');
 const cors = require('cors');
 
+const authRoutes = require('./routes/auth');
+const filesRoutes = require('./routes/files');
+const collectionsRoutes = require('./routes/collections');
+const notesRoutes = require('./routes/notes');
+const quotesRoutes = require('./routes/quotes');
+const referencesRoutes = require('./routes/references');
+const stylesRoutes = require('./routes/styles');
+
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
-
-const authRoutes = require('./routes/auth');
-const filesRoutes = require('./routes/files');
 
 mongoose
   .connect(process.env.DB, { useNewUrlParser: true })
@@ -22,6 +27,15 @@ mongoose
     console.log(`Connected to Mongo! Database name: "${res.connections[0].name}"`);
   })
   .catch(err => console.error('Error connecting to mongo', err));
+
+app.use(
+  session({
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24
+    },
+    secret: process.env.SECRET
+  })
+);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -38,6 +52,11 @@ app.use(
 
 app.use('/api/auth', authRoutes);
 app.use('/api/files', filesRoutes);
+app.use('/api/collections', collectionsRoutes);
+app.use('/api/notes', notesRoutes);
+app.use('/api/quotes', quotesRoutes);
+app.use('/api/references', referencesRoutes);
+app.use('/api/styles', stylesRoutes);
 
 const { loginSocket } = require('./middleware');
 
