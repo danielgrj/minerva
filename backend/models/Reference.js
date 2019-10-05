@@ -14,6 +14,11 @@ const referenceSchema = new Schema(
       firstName: String,
       lastName: String
     },
+    type: {
+      type: String,
+      required: true,
+      enum: ['BOOK', 'ARTICLE']
+    },
     volume: Number,
     edition: Number,
     place: String,
