@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { CSSTransitionGroup } from 'react-transition-group'
+import REFERENCE_SERVICE from './../../services/references'
 
 import './reference.css'
 
@@ -7,9 +8,21 @@ const handleInput = (referenceData, setReferenceData) => (e) =>{
   setReferenceData({...referenceData, [e.target.name]: e.target.value});
 }
 
+const onSubmit = (referenceData, props) => async (e) => {
+  e.preventDefault()
+  console.log(referenceData)
+  await REFERENCE_SERVICE.createReference({...referenceData, author: {
+    firstName: referenceData.firstName,
+    lastName: referenceData.lastName
+  }})
+
+  props.history.goBack()
+}
+
 export default function Reference(props) {
   const [ isVisible, setIsVisible ] = useState(false)
   const [ referenceData, setReferenceData ] = useState({
+    type: 'BOOK',
     title: '',
     firstName: '',
     lastName: '',
@@ -22,6 +35,7 @@ export default function Reference(props) {
     language: '',
     isbn: '',
     url: '',
+    doi: '',
     accessed: '',
     archive: ''
   })
@@ -47,10 +61,17 @@ export default function Reference(props) {
       >
         {isVisible ? 
           <div className="reference-container">
-            <form className="reference" onSubmit={(e) => { e.preventDefault(); console.log(referenceData) }}>
+            <form className="reference" onSubmit={onSubmit(referenceData, props)}>
+              <h2>Add reference</h2>
               <select name="type" id="type">
                 <option value="BOOK">Book</option>
-                <option value="MAGAZINE">Magazine</option>
+                <option value="BOOK_SECTION">Book Section</option>
+                <option value="ENCYCLOPEDIA_ARTICLE">Encyclopedia article</option>
+                <option value="JOURNAL_ARTICLE">Journal article</option>
+                <option value="MAGAZINE_ARTICLE">Magazine article</option>
+                <option value="NEWSPAPER_ARTICLE">Newspaper article</option>
+                <option value="THESIS">Thesis</option>
+                <option value="WEB_PAGE">Web page</option>
               </select>
               <div className="fields">
                 <label htmlFor="Title">Title</label>
@@ -65,7 +86,25 @@ export default function Reference(props) {
                 <input type="text" name="place" id="place" value={referenceData.place} onChange={handleInput(referenceData, setReferenceData)}/>
                 <label htmlFor="date">Date</label>
                 <input type="date" name="date" id="date" value={referenceData.date} onChange={handleInput(referenceData, setReferenceData)}/>
-              </div>
+                <label htmlFor="numberOfPages">Number of pages</label>
+                <input type="text" name="numberOfPages" id="numberOfPages" value={referenceData.numberOfPages} onChange={handleInput(referenceData, setReferenceData)}/>
+                <label htmlFor="volume">Volume</label>
+                <input type="text" name="volume" id="volume" value={referenceData.volume} onChange={handleInput(referenceData, setReferenceData)}/>
+                <label htmlFor="url">Website url</label>
+                <input type="url" name="url" id="url" value={referenceData.url} onChange={handleInput(referenceData, setReferenceData)}/>
+                <label htmlFor="accessed">Date of access</label>
+                <input type="date" name="accessed" id="accessed" value={referenceData.accessed} onChange={handleInput(referenceData, setReferenceData)}/>
+                <label htmlFor="edition">Edition</label>
+                <input type="text" name="edition" id="edition" value={referenceData.edition} onChange={handleInput(referenceData, setReferenceData)}/>
+                <label htmlFor="archive">Archive</label>
+                <input type="text" name="archive" id="archive" value={referenceData.archive} onChange={handleInput(referenceData, setReferenceData)}/>
+                <label htmlFor="language">Language</label>
+                <input type="text" name="language" id="language" value={referenceData.language} onChange={handleInput(referenceData, setReferenceData)}/>
+                <label htmlFor="isbn">ISBN</label>
+                <input type="text" name="isbn" id="isbn" value={referenceData.isbn} onChange={handleInput(referenceData, setReferenceData)}/>
+                <label htmlFor="doi">DOI</label>
+                <input type="text" name="doi" id="doi" value={referenceData.doi} onChange={handleInput(referenceData, setReferenceData)}/>
+              </div> 
               <input type="submit" value="Save reference" />
             </form>
           </div> 
