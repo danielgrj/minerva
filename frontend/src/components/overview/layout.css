@@ -83,6 +83,7 @@
   width: 5.2rem;
   height: 5.2rem;
   font-size: 2rem;
+  margin-left: 1rem;
 }
 
 button:focus {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { CSSTransitionGroup } from 'react-transition-group'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisV, faTrash, faPenSquare } from '@fortawesome/free-solid-svg-icons'
-import { QuotesContext } from '../../context/quotesContext'
+import { QuotesContext } from '../../context/QuotesContext'
 
 export default function QuoteCard({ quote }) {
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);

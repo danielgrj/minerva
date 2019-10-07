@@ -6,8 +6,11 @@ const colletionSchema = new Schema({
     required: true
   },
   userFrom: {
-    type: String,
+    type: Schema.Types.ObjectId,
     required: true
+  },
+  defaultStyle: {
+    type: Schema.Types.ObjectId
   },
   contributors: [
     {

@@ -1,5 +1,5 @@
 import React, { createContext, Component } from 'react'
-import QUOTES_SERVICE from './../services/quotes'
+import QUOTES_SERVICE from '../services/quotes'
 
 export const QuotesContext = createContext()
 
@@ -16,7 +16,6 @@ export default class QuotesProvider extends Component {
 
   getAllQuotes = async () => {
     const { data: quotes} = await QUOTES_SERVICE.getAllQuotes()
-    console.log(quotes)
     this.setState({ quotes })
   }
 

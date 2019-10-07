@@ -1,13 +1,13 @@
-.references {
+.collections {
   padding: 1.5rem;
   overflow-y: auto;
 }
 
-.references > h3 {
+.collections > h3 {
   color: #444;
 }
 
-.reference-item {
+.collection-item {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -16,12 +16,12 @@
   padding: 0.5rem;
 }
 
-.reference-item a {
+.collection-item a {
   color: inherit;
-  text-decoration: none;
   cursor: pointer;
+  text-decoration: none;
 }
 
-.reference-item svg {
+.collection-item svg {
   color: #5f6368;
 }

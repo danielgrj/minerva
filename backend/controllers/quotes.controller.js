@@ -10,9 +10,9 @@ exports.updateQuote = client => async ({ editorState, editorHtml }, id) => {
 };
 
 exports.createQuote = async (req, res) => {
-  const { body, collectionFrom, referenceFrom, imageUrl, pages } = req.body;
+  const { body, collectionFrom, referenceFrom, imageUrl, pages, name } = req.body;
   const { id: userFrom } = req.user;
-  const quote = await Quote.create({ body, collectionFrom, referenceFrom, imageUrl, pages, userFrom });
+  const quote = await Quote.create({ body, collectionFrom, referenceFrom, imageUrl, pages, userFrom, name });
 
   if (!quote) res.status(500).json({ msg: 'Something went wrong' });
   res.status(201).json(quote);

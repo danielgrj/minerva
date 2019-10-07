@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { ReferencesContext } from './../../context/ReferencesContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faBook } from '@fortawesome/free-solid-svg-icons'
 
 import './references.css'
 
@@ -11,10 +11,10 @@ export default function References() {
   
   return (
     <div className="references">
-      <h3>References</h3>
+      <h3><FontAwesomeIcon icon={faBook} /> References</h3>
       {references.map((({author, title, _id}) => (
         <div key={_id} className="reference-item">
-          <div>{`${author.lastName}, ${author.firstName.charAt(0)}. ${title}`}</div>
+          <div><Link to={`/main/references/${_id}`}>{`${author.lastName}, ${author.firstName.charAt(0)}. ${title}`}</Link></div>
           <div>
             <Link to={`/main/reference/${_id}/edit`}><FontAwesomeIcon icon={faEdit} /></Link>
           </div>

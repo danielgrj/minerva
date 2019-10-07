@@ -13,6 +13,7 @@ const quoteSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
+  name: String,
   body: {
     type: String,
     required: true
