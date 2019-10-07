@@ -1,74 +1,59 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { Link, Switch, Route } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookOpen, faQuoteRight, faPlus } from '@fortawesome/free-solid-svg-icons'
-import Quote from '../editor/Quote'
-
 import { CSSTransitionGroup } from 'react-transition-group' 
 
-import './layout.css'
+import Quote from '../editor/Quote'
 import Reference from '../forms/Reference'
 import Navbar from './Navbar'
+import Quotes from './Quotes'
+import QuotesProvider from '../../context/quotesContext'
+import ReferencesProvider from '../../context/ReferencesContext'
 
-export default class Layout extends Component {
-  state = {
-    editorModal: undefined,
-    isPlusActive: false
-  }
+import './layout.css'
+import References from './References'
 
-  handleCloseModal = (e) => {
-    if (e.target.className === 'modal-container') this.setState({ editorModal: undefined })
-  }
+export default function Layout () {
+  const [ isPlusActive, setIsPlusActive ] = useState(false);
 
-  handleQuote = () => {
-    this.setState({ editorModal: (
-      <div className="modal-container" onClick={this.handleCloseModal}>
-        <Quote />
-      </div>
-    )})
-  }
-
-  handlePlusButton = () => {
-    this.setState(prevState => {
-      const { isPlusActive } = prevState;
-
-      return { isPlusActive: !isPlusActive }
-    })
-  }
-
-  render() {
-    return (
-      <div className="layout-container">
-        <Navbar />
-        <div className="layout">
-          {this.state.editorModal}
-          <div className="collections"></div>
-          <div className="references"></div>
-          <div className="main-content">
-            <div className="add-content">
-              <CSSTransitionGroup
-                transitionName="plus-button"
-                transitionEnterTimeout={250}
-                transitionLeaveTimeout={200}
-                component="div"
-              >
-                {this.state.isPlusActive ?
-                  <div className="add-content-buttons">
-                    <div>Add quote <Link to="/main/quote/add" onClick={this.handlePlusButton}><button><FontAwesomeIcon icon={faQuoteRight} /></button></Link></div>
-                    <div>Add reference <Link to="/main/reference/add"><button><FontAwesomeIcon icon={faBookOpen} /></button></Link></div>
-                  </div>
-                  : undefined}
-              </CSSTransitionGroup>
-
-              <button onClick={this.handlePlusButton}><FontAwesomeIcon icon={faPlus} /></button>
+  return (
+    <ReferencesProvider>
+      <QuotesProvider>
+        <div className="layout-container">
+          <Navbar />
+          <div className="layout">
+            <div className="collections">
             </div>
+            <References />
+            <div className="main-content">
+              <Quotes />
+              <div className="add-content">
+                <CSSTransitionGroup
+                  transitionName="plus-button"
+                  transitionEnterTimeout={250}
+                  transitionLeaveTimeout={200}
+                  component="div"
+                >
+                  {isPlusActive ?
+                    <div className="add-content-buttons">
+                      <div>Add quote <Link to="/main/quote/add" onClick={() => setIsPlusActive(!isPlusActive)}><button><FontAwesomeIcon icon={faQuoteRight} /></button></Link></div>
+                      <div>Add reference <Link to="/main/reference/add"><button><FontAwesomeIcon icon={faBookOpen} /></button></Link></div>
+                    </div>
+                    : undefined}
+                </CSSTransitionGroup>
+                <button onClick={() => setIsPlusActive(!isPlusActive)}><FontAwesomeIcon icon={faPlus} /></button>
+              </div>
+            </div>
+            <Switch>
+              <Route exact path="/main/quote/add" component={Quote} />
+              <Route exact path="/main/quote/:id" component={Quote} />
+              <Route exact path="/main/reference/add" component={Reference} />
+              <Route exact path="/main/reference/:id/edit" component={Reference} />
+            </Switch>
           </div>
-          <Switch>
-            <Route exact path="/main/quote/add" component={Quote} />
-            <Route exact path="/main/reference/add" component={Reference} />
-          </Switch>
         </div>
-      </div>
-    )
-  }
+      </QuotesProvider>
+    </ReferencesProvider>
+  )
 }

@@ -13,11 +13,15 @@ exports.catchErrors = fn => {
 };
 
 exports.loginSocket = async (socket, next) => {
-  const { token } = socket.handshake.query;
-  const { _id } = jwt.verify(token, process.env.SECRET);
-  const user = await User.findOne({ _id, 'tokens.token': token });
-  socket._id = _id;
-  if (user) next();
+  try {
+    const { token } = socket.handshake.query;
+    const { _id } = jwt.verify(token, process.env.SECRET);
+    const user = await User.findOne({ _id, 'tokens.token': token });
+    socket._id = _id;
+    if (user) next();
+  } catch (e) {
+    console.log('Not connected to socket');
+  }
 };
 
 exports.isLoggedIn = (req, res, next) => {

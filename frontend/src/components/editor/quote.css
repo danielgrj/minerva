@@ -28,6 +28,10 @@
   align-items: center;
 }
 
+.quote svg {
+  color: #5f6368;
+}
+
 .quote-container::-webkit-scrollbar {
   width: 12px; /* for vertical scrollbars */
   height: 12px; /* for horizontal scrollbars */

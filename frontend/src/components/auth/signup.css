@@ -11,6 +11,10 @@
   padding: 5rem 4rem;
 }
 
+.card--signup input:focus {
+  outline: none;
+}
+
 .card > h2 {
   margin: 0;
   font-size: 3.6rem;
