@@ -4,9 +4,13 @@ const savedQuote = (cb) => {
   socket.on('savedQuote', (quote) => cb(null, quote))
 }
 
-const updateQuote = (editorState, id) => {
-  console.log(id)
-  socket.emit('editQuote', editorState, id)
+const updatedQuote = (cb) => {
+  socket.on('updatedQuote', (quote) => cb(null, quote))
 }
 
-export { savedQuote, updateQuote }
+const updateQuote = (editorState, id, editorHtml) => {
+  console.log(typeof editorHtml)
+  socket.emit('editQuote', {editorState, editorHtml}, id)
+}
+
+export { savedQuote, updateQuote, updatedQuote }

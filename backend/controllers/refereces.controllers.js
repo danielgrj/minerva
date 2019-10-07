@@ -5,7 +5,7 @@ exports.createReference = async (req, res) => {
     type,
     title,
     author,
-    volumen,
+    volume,
     edition,
     place,
     publisher,
@@ -25,7 +25,7 @@ exports.createReference = async (req, res) => {
     userFrom,
     title,
     author,
-    volumen,
+    volume,
     edition,
     place,
     publisher,
@@ -45,7 +45,7 @@ exports.createReference = async (req, res) => {
 
 exports.getOneReference = async (req, res) => {
   const { id: _id } = req.params;
-  const { id: userFrom } = req.params;
+  const { id: userFrom } = req.user;
 
   const reference = await Reference.findOne({ _id, userFrom });
   if (!reference) return res.status(404).json({ msg: 'Reference not found' });

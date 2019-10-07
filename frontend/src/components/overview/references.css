@@ -1,0 +1,18 @@
+.references {
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.reference-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #f1f3f4;
+  padding: 0.5rem;
+}
+
+.reference-item a {
+  color: #5f6368;
+  cursor: pointer;
+}

@@ -17,6 +17,10 @@ const quoteSchema = new Schema({
     type: String,
     required: true
   },
+  html: {
+    type: String,
+    required: true
+  },
   imageUrl: String,
   pages: String
 });

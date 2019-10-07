@@ -1,11 +1,12 @@
 const Quote = require('./../models/Quote');
 
-exports.updateQuote = client => async (editorState, id) => {
+exports.updateQuote = client => async ({ editorState, editorHtml }, id) => {
   if (!id) {
-    const quote = await Quote.create({ body: JSON.stringify(editorState), user: client._id });
+    const quote = await Quote.create({ body: JSON.stringify(editorState), userFrom: client._id, html: editorHtml });
     client.emit('savedQuote', quote);
   }
-  await Quote.findByIdAndUpdate(id, { body: JSON.stringify(editorState) });
+  const quote = await Quote.findByIdAndUpdate(id, { body: JSON.stringify(editorState), html: editorHtml });
+  client.emit('updatedQuote', quote);
 };
 
 exports.createQuote = async (req, res) => {
