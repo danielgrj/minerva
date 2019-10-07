@@ -5,12 +5,13 @@ import Camera from 'react-html5-camera-photo'
 import Tesseract from 'tesseract.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage, faCamera, faBook } from '@fortawesome/free-solid-svg-icons'
-import { QuotesContext } from '../../context/quotesContext'
+import { QuotesContext } from '../../context/QuotesContext'
 import QUOTES_SERVICE from '../../services/quotes'
 import { CSSTransitionGroup } from 'react-transition-group' 
 
 import 'react-html5-camera-photo/build/css/index.css';
 import './quote.css'
+import { CollectionsContext } from '../../context/CollectionsContext'
 
 export default function Quote (props){
   const [ id, setId ] = useState(props.match.params.id);
@@ -22,6 +23,7 @@ export default function Quote (props){
   const [ quote, setQuote ] = useState(undefined)
 
   const { addQuote } = useContext(QuotesContext)
+  const { collections, updateOneCollection } = useContext(CollectionsContext)
 
   useEffect(() => {
     setIsVisible(true)
@@ -50,12 +52,10 @@ export default function Quote (props){
     const result = await Tesseract
       .recognize(image, 'eng')
       .progress((p) => {
-        console.log(p)
       })
     Tesseract.terminate();
 
     setOcrText(result.text)
-    console.log(result.text)
     setIsLoading(false)
   }
 
@@ -76,6 +76,14 @@ export default function Quote (props){
     }
   }
 
+  const setCollection = () => {
+    const id = document.querySelector('#collection').value;
+    const collection = collections.find((currentCollection) => currentCollection._id === id)
+
+    collection.quotes.push(quote._id)
+    updateOneCollection(id, collection)
+  }
+
   const renderImage = () => {
     if (imageUrl) return <div><img src={imageUrl} alt="Quote image" /></div>
   }
@@ -93,29 +101,41 @@ export default function Quote (props){
         { isVisible ? 
           <div className="quote-container">
             <div className="quote">
-              <div>
-                <div className="quote-menu">
-                  <div className="upload-wrapper">
-                    <button><FontAwesomeIcon icon={ faImage } /></button>
-                    <input type="file" onChange={ handleAttachment } />
+              <div className="quote-editor">
+                <div>
+                  <div className="quote-menu">
+                    <div className="upload-wrapper">
+                      <button><FontAwesomeIcon icon={faImage} /></button>
+                      <input type="file" onChange={handleAttachment} />
+                    </div>
+                    <button onClick={() => setIsCameraActive(true)}><FontAwesomeIcon icon={faCamera} /></button>
+                    <button><FontAwesomeIcon icon={faBook} /></button>
+                    {isLoading ? <div className="spin-circle"></div> : undefined}
                   </div>
-                  <button onClick={ () => setIsCameraActive(true) }><FontAwesomeIcon icon={faCamera} /></button>
-                  <button><FontAwesomeIcon icon={faBook}/></button>
+                  {renderImage()}
                 </div>
-                {renderImage()}
-                { isLoading ? <div className="spin-circle"></div> : undefined }
+                <Editor
+                  handleSaved={savedQuote}
+                  handleUpdate={updateQuote}
+                  isQuote={true}
+                  id={id}
+                  handleId={setId}
+                  handleDocument={handleQuote}
+                  ocrText={ocrText}
+                  textDocument={quote}
+                  handleGetDocument={handleGetDocument}
+                />
               </div>
-              <Editor
-                handleSaved={ savedQuote }
-                handleUpdate={ updateQuote }
-                isQuote={ true }
-                id={ id }
-                handleId={ setId }
-                handleDocument={ handleQuote }
-                ocrText={ ocrText }
-                textDocument={ quote }
-                handleGetDocument={ handleGetDocument }
-              />
+              { quote ?
+                <div className="add-to-collection">
+                  <select name="collection" id="collection">
+                    {collections.map(({ _id, name }) => (
+                      <option key={_id} value={_id}>{name}</option>
+                    ))}
+                  </select>
+                  <button onClick={setCollection}>Set</button>
+                </div>
+              : undefined}
             </div>
             { isCameraActive ? <Camera onTakePhoto={handlePhoto} isFullscreen={true} /> : undefined }
           </div> 

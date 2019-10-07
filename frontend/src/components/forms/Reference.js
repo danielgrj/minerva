@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { CSSTransitionGroup } from 'react-transition-group'
-import REFERENCE_SERVICE from './../../services/references'
 
 import './reference.css'
 import { ReferencesContext } from '../../context/ReferencesContext'
@@ -77,7 +76,10 @@ export default function Reference(props) {
     }
 
     cleanCurrentReference()
-    props.history.goBack()
+    setIsVisible(false)
+    setTimeout(() => {
+      props.history.goBack()
+    }, 200)
   }
 
   return (

@@ -1,7 +1,7 @@
 const Collection = require('./../models/Collection');
 
 exports.createCollection = async (req, res) => {
-  const { name } = req.body;
+  const { name, defaultStyle } = req.body;
   const { id: userFrom } = req.user;
 
   const collection = await Collection.create({ name, userFrom });
@@ -15,8 +15,9 @@ exports.getOneCollection = async (req, res) => {
   const { id: _id } = req.params;
   const { id: userFrom } = req.user;
 
-  const collection = await Collection.findOne({ _id, userFrom });
+  const collection = await Collection.findOne({ _id, userFrom }).populate('quotes');
   if (!collection) res.status(404).json({ msg: 'Not ' });
+  res.status(200).json(collection);
 };
 
 exports.getAllCollections = async (req, res) => {

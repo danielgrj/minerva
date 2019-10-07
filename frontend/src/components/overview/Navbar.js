@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faSearch } from '@fortawesome/free-solid-svg-icons'
 
@@ -9,7 +10,7 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="navbar-left">
         <FontAwesomeIcon icon={faBars} />
-        <div className="minerva">Minerva</div>
+        <div className="minerva"><Link to="/main">Minerva</Link></div>
       </div>
       <div className="navbar-center">
         <div className="search"><FontAwesomeIcon icon={faSearch} /><input type="text" placeholder="Search"/></div>

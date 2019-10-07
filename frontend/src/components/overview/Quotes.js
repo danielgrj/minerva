@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
-import { QuotesContext }  from '../../context/quotesContext'
+import { QuotesContext }  from '../../context/QuotesContext'
 
 
 import './quotes.css'
 import QuoteCard from './QuoteCard'
 
 export default function Quotes(props) {
-  const { quotes } = useContext(QuotesContext)
+  const { quotes: contextQuotes }  = useContext(QuotesContext)
+  const quotes = props.quotes || contextQuotes
 
   return (
     <div className="quotes-container">
