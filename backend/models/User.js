@@ -48,6 +48,7 @@ userSchema.methods.toJSON = function() {
 
   delete userObject.hash;
   delete userObject.tokens;
+  delete userObject.salt;
 
   return userObject;
 };

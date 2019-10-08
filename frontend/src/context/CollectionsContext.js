@@ -30,7 +30,6 @@ export default class CollectionsProvider extends Component {
 
   getOneCollection = async (id) => {
     const { data: currentCollection } = await COLLECTIONS_SERVICE.getOneCollection(id)
-    console.log('On context', currentCollection)
     this.setState({ currentCollection })
   }
 
@@ -57,6 +56,15 @@ export default class CollectionsProvider extends Component {
     })
   }
 
+  deleteOneQuoteFromCollection = (quoteToRemove) => {
+    this.setState((prevState) => {
+      const { currentCollection } = prevState
+      const quotes = currentCollection.quotes.filter((quote) => quote._id !== quoteToRemove._id);
+
+      return { currentCollection: {...currentCollection, quotes } }
+    })
+  }
+
   deleteOneCollection = async (id) => {
     const { data: collectionToRemove } = await COLLECTIONS_SERVICE.deleteCollection(id);
     this.setState((prevState) => {
@@ -75,7 +83,8 @@ export default class CollectionsProvider extends Component {
       createOneCollection,
       deleteOneCollection,
       updateOneCollection,
-      cleanCurrentCollection
+      cleanCurrentCollection,
+      deleteOneQuoteFromCollection
     } = this
     return (
       <CollectionsContext.Provider
@@ -88,7 +97,8 @@ export default class CollectionsProvider extends Component {
           createOneCollection,
           updateOneCollection,
           deleteOneCollection,
-          cleanCurrentCollection
+          cleanCurrentCollection,
+          deleteOneQuoteFromCollection
         }}
       >
         {this.props.children}

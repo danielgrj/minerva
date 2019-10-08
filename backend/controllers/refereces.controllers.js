@@ -4,7 +4,7 @@ exports.createReference = async (req, res) => {
   const {
     type,
     title,
-    author,
+    authors,
     volume,
     edition,
     place,
@@ -24,7 +24,7 @@ exports.createReference = async (req, res) => {
     type,
     userFrom,
     title,
-    author,
+    authors,
     volume,
     edition,
     place,
@@ -47,8 +47,10 @@ exports.getOneReference = async (req, res) => {
   const { id: _id } = req.params;
   const { id: userFrom } = req.user;
 
-  const reference = await Reference.findOne({ _id, userFrom });
+  const reference = await Reference.getReferenceWithQuotes({ _id, userFrom });
   if (!reference) return res.status(404).json({ msg: 'Reference not found' });
+
+  console.log(reference);
   res.status(200).json(reference);
 };
 
@@ -67,7 +69,7 @@ exports.updateReference = async (req, res) => {
   const allowedUpdates = [
     'type',
     'title',
-    'author',
+    'authors',
     'volumen',
     'edition',
     'place',
@@ -82,13 +84,13 @@ exports.updateReference = async (req, res) => {
     'archive'
   ];
 
-  const updates = {};
+  const reference = await Reference.findOne({ _id, userFrom });
 
   for (const key in req.body) {
-    if (allowedUpdates.includes(key)) updates[key] = req.body[key];
+    if (allowedUpdates.includes(key)) reference[key] = req.body[key];
   }
 
-  const reference = await Reference.findOneAndUpdate({ _id, userFrom }, updates, { new: true });
+  await reference.save();
 
   if (!reference) return res.status(500).json({ msg: 'Server error' });
   res.status(200).json(reference);

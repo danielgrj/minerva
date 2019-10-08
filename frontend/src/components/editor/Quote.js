@@ -1,19 +1,25 @@
-import React, { Component, useContext, useState, useEffect } from 'react'
-import { savedQuote, updateQuote, updatedQuote } from '../../services/editor'
-import Editor from './Editor'
+import React, { useContext, useState, useEffect } from 'react'
+import { savedQuote, updateQuote, updatedQuote, cleanConnection } from '../../services/editor'
 import Camera from 'react-html5-camera-photo'
 import Tesseract from 'tesseract.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage, faCamera, faBook } from '@fortawesome/free-solid-svg-icons'
-import { QuotesContext } from '../../context/QuotesContext'
-import QUOTES_SERVICE from '../../services/quotes'
 import { CSSTransitionGroup } from 'react-transition-group' 
+
+import Editor from './Editor'
+import { CollectionsContext } from '../../context/CollectionsContext'
+import { QuotesContext } from '../../context/QuotesContext'
+import { ReferencesContext } from '../../context/ReferencesContext'
+import QUOTES_SERVICE from '../../services/quotes'
 
 import 'react-html5-camera-photo/build/css/index.css';
 import './quote.css'
-import { CollectionsContext } from '../../context/CollectionsContext'
 
 export default function Quote (props){
+  const { addQuote, updateOneQuote } = useContext(QuotesContext)
+  const { collections: allCollections, updateOneCollection, getAllCollections  } = useContext(CollectionsContext)
+  const { references } = useContext(ReferencesContext)
+
   const [ id, setId ] = useState(props.match.params.id);
   const [ ocrText, setOcrText ] = useState(undefined);
   const [ imageUrl, setImageUrl ] = useState('');
@@ -21,22 +27,30 @@ export default function Quote (props){
   const [ isCameraActive, setIsCameraActive ] = useState(false);
   const [ isVisible, setIsVisible ] = useState(false)
   const [ quote, setQuote ] = useState(undefined)
+  const [ collections, setCollections] = useState(allCollections)
 
-  const { addQuote } = useContext(QuotesContext)
-  const { collections, updateOneCollection } = useContext(CollectionsContext)
 
   useEffect(() => {
     setIsVisible(true)
+  }, [])
+
+  useEffect(() => {
+    if(quote) {
+      setCollections(allCollections.filter(collection => !collection.quotes.includes(quote._id)))
+      getAllCollections()
+    }
 
     return () => {
       if(quote) addQuote(quote)
     }
-  }, [quote])
+  }, [quote, allCollections, addQuote, getAllCollections])
 
   const handleGetDocument = async (cb) => {
-    const { data: quote } = await QUOTES_SERVICE.getOneQuote(id)
-    setQuote(quote)
-    cb(quote)
+    if(props.match.params.id) {
+      const { data: quote } = await QUOTES_SERVICE.getOneQuote(id)
+      setQuote(quote)
+      cb(quote)
+    }
   }
 
   const handleClose = () => {
@@ -84,8 +98,14 @@ export default function Quote (props){
     updateOneCollection(id, collection)
   }
 
+  const setReference = () => {
+    const referenceFrom = document.querySelector('#reference').value;
+    
+    updateOneQuote(quote._id, {referenceFrom})
+  }
+
   const renderImage = () => {
-    if (imageUrl) return <div><img src={imageUrl} alt="Quote image" /></div>
+    if (imageUrl) return <div><img src={imageUrl} alt="attached" /></div>
   }
 
   return (
@@ -124,16 +144,27 @@ export default function Quote (props){
                   ocrText={ocrText}
                   textDocument={quote}
                   handleGetDocument={handleGetDocument}
+                  handleUnmount={cleanConnection}
                 />
               </div>
               { quote ?
-                <div className="add-to-collection">
-                  <select name="collection" id="collection">
-                    {collections.map(({ _id, name }) => (
-                      <option key={_id} value={_id}>{name}</option>
-                    ))}
-                  </select>
-                  <button onClick={setCollection}>Set</button>
+                <div className="editor-meta">
+                  <div className="add-to-collection">
+                    <select name="collection" id="collection">
+                      {collections.map(({ _id, name }) => (
+                        <option key={_id} value={_id}>{name}</option>
+                      ))}
+                    </select>
+                    <button onClick={setCollection}>Add</button>
+                  </div>
+                  <div className="add-to-reference">
+                    <select name="refrence" id="reference" >
+                      {references.map(({_id, authors, title}) => (
+                        <option key={_id} value={_id}>{`${authors[0].lastName}, ${authors[0].lastName.charAt(0)}. ${title}`}</option>
+                      ))}
+                    </select>
+                    <button onClick={setReference}>Set</button>
+                  </div>
                 </div>
               : undefined}
             </div>

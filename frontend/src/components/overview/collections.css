@@ -25,3 +25,10 @@
 .collection-item svg {
   color: #5f6368;
 }
+
+.current-collection {
+  background-color: rgb(240, 94, 35);
+  color: #fff !important;
+  padding: 0.5rem 1rem;
+  border-radius: 3px;
+}

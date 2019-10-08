@@ -4,10 +4,20 @@ import { CSSTransitionGroup } from 'react-transition-group'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisV, faTrash, faPenSquare } from '@fortawesome/free-solid-svg-icons'
 import { QuotesContext } from '../../context/QuotesContext'
+import { CollectionsContext } from '../../context/CollectionsContext'
+import { ReferencesContext } from '../../context/ReferencesContext'
 
 export default function QuoteCard({ quote }) {
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
   const { deleteOneQuote } = useContext(QuotesContext)
+  const { currentCollection, deleteOneQuoteFromCollection } = useContext(CollectionsContext)
+  const { currentReference, deleteOneQuoteFromReference } = useContext(ReferencesContext)
+
+  const handleDelete = () => {
+    deleteOneQuote(quote._id)
+    if (currentCollection._id) deleteOneQuoteFromCollection(quote)
+    if (currentReference._id) deleteOneQuoteFromReference(quote)
+  }
 
   return (
     <div className="quote-card">
@@ -27,7 +37,7 @@ export default function QuoteCard({ quote }) {
           >
             {isOptionsVisible ?
               <div className="options-actions">
-                <button onClick={() => deleteOneQuote(quote._id)} className="delete"><FontAwesomeIcon icon={faTrash} /> Delete</button>
+                <button onClick={handleDelete} className="delete"><FontAwesomeIcon icon={faTrash} /> Delete</button>
                 <button className="edit"><FontAwesomeIcon icon={faPenSquare} /> Change reference</button>
               </div>
               : undefined}

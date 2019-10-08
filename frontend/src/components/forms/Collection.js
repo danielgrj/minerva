@@ -26,7 +26,9 @@ export default function Collection(props) {
 
   useEffect(() => {
     setIsVisible(true)
+  }, [])
 
+  useEffect(() => {
     if ((!collectionData._id && props.match.params.id) || collectionData._id !== props.match.params.id) {
       
       getOneCollection(props.match.params.id)
@@ -36,7 +38,7 @@ export default function Collection(props) {
 
       setCollectionData(currentCollection)
     }
-  }, [currentCollection])
+  }, [currentCollection, collectionData._id, getOneCollection, props.match.params.id])
 
   const handleInput = (e) => {
     setCollectionData({ ...collectionData, [e.target.name]: e.target.value });

@@ -13,7 +13,7 @@ exports.createStyle = async (req, res) => {
 exports.getAllStyles = async (req, res) => {
   const { id: userFrom } = req.user;
 
-  const styles = await Style.find({ userFrom });
+  const styles = await Style.find({ $or: [{ userFrom }, { userFrom: null }] });
 
   res.status(200).json(styles);
 };

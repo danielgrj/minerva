@@ -1,4 +1,5 @@
 const { model, Schema } = require('mongoose');
+const Quote = require('./Quote');
 
 const referenceSchema = new Schema(
   {
@@ -10,10 +11,12 @@ const referenceSchema = new Schema(
       type: String,
       required: true
     },
-    author: {
-      firstName: String,
-      lastName: String
-    },
+    authors: [
+      {
+        firstName: String,
+        lastName: String
+      }
+    ],
     type: {
       type: String,
       required: true,
@@ -46,5 +49,31 @@ const referenceSchema = new Schema(
     versionKey: false
   }
 );
+
+referenceSchema.statics.getReferenceWithQuotes = async function(data) {
+  const reference = await this.findOne(data);
+
+  if (!reference) return null;
+
+  const quotes = await Quote.find({ referenceFrom: data._id });
+
+  reference.quotes = quotes;
+  // console.log(reference.quotes);
+
+  return reference;
+};
+
+referenceSchema.methods.toJSON = function() {
+  const reference = this;
+  const referenceObject = reference.toObject();
+
+  delete referenceObject.hash;
+  delete referenceObject.tokens;
+  delete referenceObject.salt;
+
+  referenceObject.quotes = reference.quotes;
+
+  return referenceObject;
+};
 
 module.exports = model('Reference', referenceSchema);

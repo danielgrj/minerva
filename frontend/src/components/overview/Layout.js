@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, Switch, Route } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBook, faQuoteRight, faPlus, faFolder } from '@fortawesome/free-solid-svg-icons'
@@ -20,8 +20,12 @@ import CollectionsProvider from './../../context/CollectionsContext'
 import './layout.css'
 import StylesProvider from '../../context/StylesContext'
 
-export default function Layout () {
+export default function Layout (props) {
   const [ isPlusActive, setIsPlusActive ] = useState(false);
+
+  useEffect(() => {
+    if(!localStorage.user) return props.history.push('/login')
+  }, [props.history])
 
   return (
     <StylesProvider>
@@ -51,11 +55,11 @@ export default function Layout () {
                         <div className="add-content-buttons">
                           <div>Add quote
                           <Link to="/main/quote/add" onClick={() => setIsPlusActive(!isPlusActive)}>
-                              <button><FontAwesomeIcon icon={faQuoteRight} /></button>
+                              <button className="plus-quote"><FontAwesomeIcon icon={faQuoteRight} /></button>
                             </Link>
                           </div>
-                          <div>Add reference <Link to="/main/reference/add"><button><FontAwesomeIcon icon={faBook} /></button></Link></div>
-                          <div>Add collection <Link to="/main/collection/add"><button><FontAwesomeIcon icon={faFolder} /></button></Link></div>
+                          <div>Add reference <Link to="/main/reference/add"><button className="plus-reference"><FontAwesomeIcon icon={faBook} /></button></Link></div>
+                          <div>Add collection <Link to="/main/collection/add"><button className="plus-collection"><FontAwesomeIcon icon={faFolder} /></button></Link></div>
                         </div>
                         : undefined}
                     </CSSTransitionGroup>

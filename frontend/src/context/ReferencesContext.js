@@ -96,6 +96,16 @@ export default class ReferencesProvider extends Component {
     })
   }
 
+  deleteOneQuoteFromReference = (quoteToRemove) => {
+    this.setState((prevState) => {
+      const { currentReference } = prevState
+      const quotes = currentReference.quotes.filter((quote) => quote._id !== quoteToRemove._id);
+
+      return { currentReference: { ...currentReference, quotes } }
+    })
+  }
+
+
 
   render() {
     const { references, currentReference, filtersReferences } = this.state

@@ -75,9 +75,12 @@
   margin-bottom: 1rem;
 }
 
+.add-content > button {
+  background-color: rgba(0, 142, 204, 0.9);
+}
+
 .add-content button {
   border: none;
-  background-color: rgba(0, 142, 204, 0.9);
   border-radius: 50%;
   color: #fff;
   width: 5.2rem;
@@ -88,6 +91,18 @@
 
 button:focus {
   outline: none;
+}
+
+.plus-quote {
+  background-color: rgb(0, 128, 129);
+}
+
+.plus-reference {
+  background-color: rgb(14, 77, 146);
+}
+
+.plus-collection {
+  background-color: rgb(240, 94, 35);
 }
 
 .plus-button-enter {
