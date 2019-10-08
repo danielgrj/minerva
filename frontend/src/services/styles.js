@@ -1,6 +1,7 @@
 import axios from 'axios';
+const baseURL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000/api/styles';
 
-const SERVICE = axios.create({ baseURL: 'http://localhost:3000/api/styles', withCredentials: true })
+const SERVICE = axios.create({ baseURL, withCredentials: true })
 
 const STYLE_SERVICE = {
   createStyle: (style) => SERVICE.post('/', style),

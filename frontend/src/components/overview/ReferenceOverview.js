@@ -13,20 +13,15 @@ export default function ReferenceOverview(props) {
 
   useEffect(() => {
     setIsVisible(true)
-    getOneReference(id)
   }, [])
 
   useEffect(() => {
     getOneReference(id)
-
     setIsVisible(false)
     setTimeout(() => {
       setIsVisible(true)
     }, 280)
-
-    return () => {
-    }
-  }, [id])
+  }, [id, getOneReference])
 
   return (
     <div>
@@ -41,12 +36,12 @@ export default function ReferenceOverview(props) {
           <div className="collection-overview">
             <h2><FontAwesomeIcon icon={faBook} /> 
               {
-                ` ${currentReference.author ? currentReference.author.lastName : ''}, 
-                ${currentReference.author ? currentReference.author.firstName.charAt(0) : ''}. 
+                ` ${currentReference.authors ? `${currentReference.authors[0].lastName}, ` : ''} 
+                ${currentReference.authors ? `${currentReference.authors[0].firstName.charAt(0)}.` : ''} 
                 ${currentReference.title}`
               }
             </h2>
-            <Quotes />
+            <Quotes quotes={currentReference.quotes}/>
           </div>
           : undefined}
       </CSSTransitionGroup>

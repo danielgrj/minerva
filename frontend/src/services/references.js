@@ -1,6 +1,7 @@
 import axios from 'axios';
+const baseURL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000/api/references';
 
-const SERVICE = axios.create({ baseURL: 'http://localhost:3000/api/references', withCredentials: true })
+const SERVICE = axios.create({ baseURL, withCredentials: true })
 
 const REFERENCE_SERVICE = {
   createReference: (reference) => SERVICE.post('/', reference),

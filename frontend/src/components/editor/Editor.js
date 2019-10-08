@@ -5,7 +5,6 @@ import {
   RichUtils, 
   convertToRaw,
   convertFromRaw, 
-  convertFromHTML, 
   ContentState,
 } from 'draft-js'
 
@@ -27,8 +26,8 @@ export default class Editor extends Component {
   componentDidMount = async () => {
     this.props.handleSaved((err, textDocument) => {
       this.props.handleId(textDocument._id)
-      this.setState({ id: textDocument._id})
-    })
+      this.setState({ id: textDocument._id })
+      })
 
     this.props.handleGetDocument((quote) => {
       const blocks = convertFromRaw(JSON.parse(quote.body))
@@ -40,10 +39,12 @@ export default class Editor extends Component {
     if(this.props.ocrText && this.props.ocrText !== prevProps.ocrText ) {
       this.setState({ editorState: EditorState.createWithContent(ContentState.createFromText(this.props.ocrText))})
     }
+    this.props.handleDocument(this.state.id)
   }
 
   componentWillUnmount = () => {
     this.props.handleDocument(this.state.textDocument)
+    this.props.handleUnmount()
   }
 
   editorOnChange = (editorState) => {

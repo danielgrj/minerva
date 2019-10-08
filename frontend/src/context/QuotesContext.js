@@ -32,12 +32,22 @@ export default class QuotesProvider extends Component {
       return { quotes: [...quotes, quote]}
     })
   }
+
+  updateOneQuote = async (id, data) => {
+    await QUOTES_SERVICE.updateQuote(id, data);
+  }
   
   addQuote = (quote) => {
     this.setState(prevState => {
-      const { quotes } = prevState;
+      const { quotes: oldQuotes } = prevState;
       
-      if (!JSON.stringify(quotes).includes(quote._id)) return { quotes: [...quotes, quote] }
+      if (!JSON.stringify(oldQuotes).includes(quote._id)) return { quotes: [...oldQuotes, quote] }
+      const quotes = oldQuotes.map((currentQuote) => {
+        if(currentQuote._id === quote._id) {
+          return quote
+        }
+        return currentQuote
+      })
       return { quotes }
     })
   }
@@ -54,9 +64,9 @@ export default class QuotesProvider extends Component {
 
   render() {
     const { quotes, currentQuote, filter } = this.state
-    const { getAllQuotes, getOneQuote, createOneQuote, deleteOneQuote, addQuote } = this
+    const { getAllQuotes, getOneQuote, createOneQuote, deleteOneQuote, addQuote, updateOneQuote } = this
     return (
-      <QuotesContext.Provider value={ {quotes, currentQuote, filter, getAllQuotes, getOneQuote, createOneQuote, deleteOneQuote, addQuote} }>
+      <QuotesContext.Provider value={ {quotes, currentQuote, filter, getAllQuotes, getOneQuote, createOneQuote, deleteOneQuote, addQuote, updateOneQuote} }>
         {this.props.children}
       </QuotesContext.Provider>
     )

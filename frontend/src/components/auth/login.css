@@ -1,13 +1,14 @@
 .container--login {
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(to bottom, rgba(85, 188, 144, 0.9), rgba(85, 188, 144, 1));
+  background-image: linear-gradient(to bottom, rgba(85, 188, 144, 0.9), rgba(0, 128, 129, 0.8));
 }
 
 .card--login {
-  width: 35rem;
+  width: 40rem;
   max-width: 95vw;
-  height: 60%;
+  height: 52%;
+  min-height: fit-content;
   background-color: #eee;
   padding: 3rem 3rem 1.2rem 3rem;
 }

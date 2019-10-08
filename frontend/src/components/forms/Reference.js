@@ -35,9 +35,11 @@ export default function Reference(props) {
     cleanCurrentReference 
   } = useContext(ReferencesContext)
 
-  useEffect(() => { 
+  useEffect(() => {
     setIsVisible(true)
-    
+  }, [])
+
+  useEffect(() => { 
     if ((!referenceData._id && props.match.params.id) || referenceData._id !== props.match.params.id) {
       getOneReference(props.match.params.id)
 
@@ -47,11 +49,11 @@ export default function Reference(props) {
 
       setReferenceData({ 
         ...currentReference,
-        lastName: currentReference.author ? currentReference.author.lastName : '', 
-        firstName: currentReference.author ? currentReference.author.firstName : '',
+        lastName: currentReference.authors ? currentReference.authors[0].lastName : '', 
+        firstName: currentReference.authors ? currentReference.authors[0].firstName : '',
       }) 
     }
-  }, [currentReference])
+  }, [currentReference, getOneReference, props.match.params.id, referenceData._id])
 
   const handleInput = (e) => {
     setReferenceData({ ...referenceData, [e.target.name]: e.target.value });
@@ -61,17 +63,17 @@ export default function Reference(props) {
     e.preventDefault()
     if(referenceData._id){
       updateOneReference(referenceData._id, {
-        ...referenceData, author: {
+        ...referenceData, authors: [{
           firstName: referenceData.firstName,
           lastName: referenceData.lastName
-        }
+        }] 
       })
     } else {
       createOneReference({
-        ...referenceData, author: {
+        ...referenceData, authors: [{
           firstName: referenceData.firstName,
           lastName: referenceData.lastName
-        }
+        }] 
       })
     }
 
@@ -118,7 +120,7 @@ export default function Reference(props) {
                 <input type="text" name="firstName" id="firstName" value={referenceData.firstName} onChange={handleInput} />
                 <label htmlFor="author.lastName">Last Name</label>
                 <input type="text" name="lastName" id="lastName" value={referenceData.lastName} onChange={handleInput} />
-                <label htmlFor="publiser">Publiser</label>
+                <label htmlFor="publiser">Publisher</label>
                 <input type="text" name="publisher" id="publiser" value={referenceData.publisher} onChange={handleInput}/>
                 <label htmlFor="place">Place</label>
                 <input type="text" name="place" id="place" value={referenceData.place} onChange={handleInput}/>

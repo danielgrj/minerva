@@ -15,12 +15,14 @@ const colletionSchema = new Schema({
   contributors: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
+      unique: true
     }
   ],
   quotes: [
     {
       type: Schema.Types.ObjectId,
+      unique: true,
       ref: 'Quote'
     }
   ]

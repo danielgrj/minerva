@@ -25,7 +25,7 @@ export default function CollectionOverview(props) {
     return () => {
       cleanCurrentCollection()
     }
-  }, [props.match.params.id])
+  }, [props.match.params.id, getOneCollection, cleanCurrentCollection])
   
 
   return (

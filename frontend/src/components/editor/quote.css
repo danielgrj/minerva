@@ -53,21 +53,36 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
-.add-to-collection select {
+.editor-meta {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-items: flex-start;
+}
+
+.add-to-collection,
+.add-to-reference {
+  margin: 1.5rem;
+}
+
+.add-to-collection select,
+.add-to-reference select {
   border: none;
   background: none;
   padding: 1rem;
   background-color: #f1f3f4;
-  margin-right: 2rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
 }
 
-.add-to-collection button {
+.add-to-collection button,
+.add-to-reference button {
   border: none;
   background-color: none;
   border-radius: 5px;
   background-color: rgba(0, 142, 204, 0.9);
   padding: 1rem;
   color: #eee;
+  cursor: pointer;
 }
 
 .quote-menu {

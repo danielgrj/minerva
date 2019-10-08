@@ -1,18 +1,26 @@
 .container--landing {
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(to right bottom, rgba(48, 66, 93, 0.6), rgba(48, 66, 93, 0.4)),
+  background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
     url('https://cdn.pixabay.com/photo/2016/02/19/10/12/writing-1209121_1280.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   padding: 20rem;
   color: #ddd;
+  display: flex;
+  flex-direction: column;
 }
 
 .slogan {
   text-transform: capitalize;
-  width: 45%;
-  font-size: 1.8rem;
+  width: 50%;
+  font-size: 2rem;
+  margin-bottom: 5rem;
+  text-align: center;
+}
+
+.slogan h1 {
+  font-size: 56px;
 }
 
 .identify {
@@ -26,8 +34,9 @@
 .identify > a {
   text-align: center;
   text-decoration: none;
-  padding: 1rem;
-  width: 20rem;
+  padding: 1.2rem 2rem;
+  font-size: 1.8rem;
+  width: 25rem;
   margin: 1rem;
   border-radius: 5px;
 }
@@ -39,7 +48,7 @@
 
 .signup {
   color: rgb(255, 255, 255);
-  background-color: rgba(136, 187, 214);
+  background-color: rgba(14, 77, 146, 0.95);
 }
 
 .social {
