@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const baseURL = process.env.NODE_ENV === 'production' ? 'https://atldan-minerva.herokuapp.com/api/auth' : 'http://localhost:3000/api/auth';
 
-const SERVICE = axios.create({ baseURL, withCredentials: true })
+const SERVICE = axios.create({ baseURL })
 
 const AUTH_SERVICE = {
   signup: (user) => SERVICE.post('/signup', user),

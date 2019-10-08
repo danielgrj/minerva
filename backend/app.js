@@ -61,6 +61,10 @@ app.use('/api/quotes', quotesRoutes);
 app.use('/api/references', referencesRoutes);
 app.use('/api/styles', stylesRoutes);
 
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/index.html'));
+});
+
 const { loginSocket } = require('./middleware');
 
 io.use(loginSocket);
