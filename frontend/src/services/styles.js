@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseURL = process.env.NODE_ENV === 'production' ? 'https://atldan-minerva.herokuapp.com/styles' : 'http://localhost:3000/api/styles';
+const baseURL = process.env.NODE_ENV === 'production' ? 'https://atldan-minerva.herokuapp.com/api/styles' : 'http://localhost:3000/api/styles';
 
 const SERVICE = axios.create({ baseURL, withCredentials: true })
 
