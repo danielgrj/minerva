@@ -2,9 +2,10 @@ const Reference = require('./../models/Reference');
 
 exports.createReference = async (req, res) => {
   const {
+    type,
     title,
     author,
-    volumen,
+    volume,
     edition,
     place,
     publisher,
@@ -12,16 +13,19 @@ exports.createReference = async (req, res) => {
     numberOfPages,
     language,
     isbn,
+    url,
+    doi,
     accessed,
     archive
   } = req.body;
   const { id: userFrom } = req.user;
 
   const reference = await Reference.create({
+    type,
     userFrom,
     title,
     author,
-    volumen,
+    volume,
     edition,
     place,
     publisher,
@@ -29,6 +33,8 @@ exports.createReference = async (req, res) => {
     numberOfPages,
     language,
     isbn,
+    url,
+    doi,
     accessed,
     archive
   });
@@ -39,7 +45,7 @@ exports.createReference = async (req, res) => {
 
 exports.getOneReference = async (req, res) => {
   const { id: _id } = req.params;
-  const { id: userFrom } = req.params;
+  const { id: userFrom } = req.user;
 
   const reference = await Reference.findOne({ _id, userFrom });
   if (!reference) return res.status(404).json({ msg: 'Reference not found' });
@@ -59,6 +65,7 @@ exports.updateReference = async (req, res) => {
   const { id: userFrom } = req.user;
 
   const allowedUpdates = [
+    'type',
     'title',
     'author',
     'volumen',
@@ -69,6 +76,8 @@ exports.updateReference = async (req, res) => {
     'numberOfPages',
     'language',
     'isbn',
+    'url',
+    'doi',
     'accessed',
     'archive'
   ];

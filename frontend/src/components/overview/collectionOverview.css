@@ -1,0 +1,25 @@
+.collection-overview > h2 {
+  color: #333;
+}
+
+.collection-overview-enter {
+  transform: translateX(-100);
+  opacity: 0.01;
+}
+
+.collection-overview-enter.collection-overview-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 250ms ease-in-out;
+}
+
+.collection-overview-leave {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.collection-overview-leave.collection-overview-leave-active {
+  transform: translateX(100);
+  opacity: 0.01;
+  transition: all 200ms ease-in-out;
+}

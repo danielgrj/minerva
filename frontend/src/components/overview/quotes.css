@@ -1,0 +1,104 @@
+.quotes-container {
+  display: flex;
+  overflow-x: auto;
+}
+
+.quote-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  width: 22rem;
+  overflow: hidden;
+  padding: 0.5rem 2rem;
+  margin: 2rem;
+  height: 30rem;
+  color: #5f6368;
+}
+
+.quotes-container a {
+  text-decoration: none;
+  color: #444;
+}
+
+.quote-card .content {
+  border-bottom: 1px solid #ddd;
+  height: 70%;
+  padding-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.quote-card .content > span {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
+
+.quote-card .meta {
+  position: relative;
+}
+
+.quote-card .options {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 1rem 0.5rem;
+}
+
+.options-active {
+  background-color: #fff;
+}
+
+.quote-card .options-button {
+  text-align: right;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.quote-card .options > span {
+  width: 100%;
+  height: 100%;
+  margin-top: 5px;
+}
+
+.quote-card .options-actions > button {
+  margin-bottom: 7px;
+  border: none;
+  background: none;
+  color: #5f6368;
+}
+
+.options-actions .delete:hover {
+  color: #ff3860;
+}
+
+.options-actions .edit:hover {
+  color: #e8b601;
+}
+
+.options-actions svg {
+  margin-right: 5px;
+}
+
+.options-enter {
+  opacity: 0.01;
+}
+
+.options-enter.options-enter-active {
+  opacity: 1;
+  transition: all 250ms ease-in-out;
+}
+
+.options-leave {
+  opacity: 1;
+}
+
+.options-leave.options-leave-active {
+  opacity: 0.01;
+  transition: all 200ms ease-in-out;
+}

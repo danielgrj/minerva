@@ -1,110 +1,146 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { savedQuote, updateQuote } from '../../services/editor'
+import React, { Component, useContext, useState, useEffect } from 'react'
+import { savedQuote, updateQuote, updatedQuote } from '../../services/editor'
 import Editor from './Editor'
 import Camera from 'react-html5-camera-photo'
 import Tesseract from 'tesseract.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faImage, faCamera } from '@fortawesome/free-solid-svg-icons'
-
+import { faImage, faCamera, faBook } from '@fortawesome/free-solid-svg-icons'
+import { QuotesContext } from '../../context/QuotesContext'
+import QUOTES_SERVICE from '../../services/quotes'
 import { CSSTransitionGroup } from 'react-transition-group' 
 
 import 'react-html5-camera-photo/build/css/index.css';
 import './quote.css'
+import { CollectionsContext } from '../../context/CollectionsContext'
 
+export default function Quote (props){
+  const [ id, setId ] = useState(props.match.params.id);
+  const [ ocrText, setOcrText ] = useState(undefined);
+  const [ imageUrl, setImageUrl ] = useState('');
+  const [ isLoading, setIsLoading ] = useState(false);
+  const [ isCameraActive, setIsCameraActive ] = useState(false);
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [ quote, setQuote ] = useState(undefined)
 
-export default class Quote extends Component {
-  state ={
-    id: this.props.id ? this.props.id : undefined,
-    ocrText: undefined,
-    imageUrl: '',
-    isLoading: false,
-    progress: 0,
-    id: this.props.id,
-    cameraActive: false,
-    isVisible: false
+  const { addQuote } = useContext(QuotesContext)
+  const { collections, updateOneCollection } = useContext(CollectionsContext)
+
+  useEffect(() => {
+    setIsVisible(true)
+
+    return () => {
+      if(quote) addQuote(quote)
+    }
+  }, [quote])
+
+  const handleGetDocument = async (cb) => {
+    const { data: quote } = await QUOTES_SERVICE.getOneQuote(id)
+    setQuote(quote)
+    cb(quote)
   }
 
-  componentDidMount = () => {
-    this.setState({ isVisible: true})
+  const handleClose = () => {
+    setIsVisible(false);
+    setTimeout(() => {
+      props.history.goBack()
+    }, 200)
   }
 
-  scanText = async  (image) => {
-    this.setState({ isLoading: true })
+  const scanText = async (image) => {
+    setIsLoading(true)
+
     const result = await Tesseract
       .recognize(image, 'eng')
       .progress((p) => {
       })
-
     Tesseract.terminate();
 
-    this.setState({ ocrText: result.text, isLoading: false })
+    setOcrText(result.text)
+    setIsLoading(false)
   }
 
-  handleClose = () => {
-    console.log(this.props.history)
-      this.setState(() => {
-        setTimeout(() => this.props.history.goBack(), 200)
-        return { isVisible: false}
+  const handlePhoto = (dataUri) => {
+    scanText(dataUri)
+    setIsCameraActive(false)
+  }
+
+  const handleAttachment = async (e) => {
+    scanText(e.target.files[0])
+  }
+
+  const handleQuote = (quote) => {
+    if (quote) {
+      updatedQuote((err, quote) => {
+        setQuote(quote)
       })
-  }
-  
-  handleId = (id) => {
-    this.setState({ id })
+    }
   }
 
-  handleAttachment = async (e) => {
-    this.scanText(e.target.files[0])
+  const setCollection = () => {
+    const id = document.querySelector('#collection').value;
+    const collection = collections.find((currentCollection) => currentCollection._id === id)
+
+    collection.quotes.push(quote._id)
+    updateOneCollection(id, collection)
   }
 
-  handleCamera = () => {
-    this.setState({ cameraActive: true })
+  const renderImage = () => {
+    if (imageUrl) return <div><img src={imageUrl} alt="Quote image" /></div>
   }
 
-  handlePhoto = async (dataUri) => {
-    this.scanText(dataUri)
-    this.setState({ cameraActive: false })
-  }
-
-  renderImage = () => {
-    if (this.state.imageUrl) return <div><img src={this.state.imageUrl} alt="Quote image" /></div>
-  }
-
-  render() {
-    return (
-      <div className="route-container">
-        <div className="back-container" onClick={this.handleClose}></div>
-        <CSSTransitionGroup
-          transitionName="quote"
-          transitionAppearTimeout={600}
-          transitionEnterTimeout={250}
-          transitionLeaveTimeout={200}
-          component="div"
-        >
-          {this.state.isVisible ? <div className="quote-container">
+  return (
+    <div className="route-container">
+      <div className="back-container" onClick={handleClose}></div>
+      <CSSTransitionGroup
+        transitionName="quote"
+        transitionAppearTimeout={600}
+        transitionEnterTimeout={250}
+        transitionLeaveTimeout={200}
+        component="div"
+      >
+        { isVisible ? 
+          <div className="quote-container">
             <div className="quote">
-              <div>
-                <div className="quote-menu">
-                  <div className="upload-wrapper">
-                    <button><FontAwesomeIcon icon={faImage} /></button>
-                    <input type="file" onChange={this.handleAttachment} />
+              <div className="quote-editor">
+                <div>
+                  <div className="quote-menu">
+                    <div className="upload-wrapper">
+                      <button><FontAwesomeIcon icon={faImage} /></button>
+                      <input type="file" onChange={handleAttachment} />
+                    </div>
+                    <button onClick={() => setIsCameraActive(true)}><FontAwesomeIcon icon={faCamera} /></button>
+                    <button><FontAwesomeIcon icon={faBook} /></button>
+                    {isLoading ? <div className="spin-circle"></div> : undefined}
                   </div>
-                  <button onClick={this.handleCamera}><FontAwesomeIcon icon={faCamera} /></button>
+                  {renderImage()}
                 </div>
-                {this.renderImage()}
-                {this.state.isLoading ? <div className="spin-circle"></div> : undefined}
+                <Editor
+                  handleSaved={savedQuote}
+                  handleUpdate={updateQuote}
+                  isQuote={true}
+                  id={id}
+                  handleId={setId}
+                  handleDocument={handleQuote}
+                  ocrText={ocrText}
+                  textDocument={quote}
+                  handleGetDocument={handleGetDocument}
+                />
               </div>
-              <Editor
-                handleSaved={savedQuote}
-                handleUpdate={updateQuote}
-                isQuote={true} id={this.state.id}
-                handleId={this.handleId}
-              />
+              { quote ?
+                <div className="add-to-collection">
+                  <select name="collection" id="collection">
+                    {collections.map(({ _id, name }) => (
+                      <option key={_id} value={_id}>{name}</option>
+                    ))}
+                  </select>
+                  <button onClick={setCollection}>Set</button>
+                </div>
+              : undefined}
             </div>
-            {this.state.cameraActive ? <Camera onTakePhoto={this.handlePhoto} isFullscreen={true} /> : undefined}
-          </div> : undefined}
-        </CSSTransitionGroup>
-      </div>
-    )
-  }
+            { isCameraActive ? <Camera onTakePhoto={handlePhoto} isFullscreen={true} /> : undefined }
+          </div> 
+        : undefined }
+      </CSSTransitionGroup>
+    </div>
+  )
 }

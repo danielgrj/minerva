@@ -1,0 +1,27 @@
+.collections {
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.collections > h3 {
+  color: #444;
+}
+
+.collection-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #f1f3f4;
+  padding: 0.5rem;
+}
+
+.collection-item a {
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.collection-item svg {
+  color: #5f6368;
+}

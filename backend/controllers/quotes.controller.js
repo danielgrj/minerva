@@ -1,17 +1,18 @@
 const Quote = require('./../models/Quote');
 
-exports.updateQuote = client => async (editorState, id) => {
+exports.updateQuote = client => async ({ editorState, editorHtml }, id) => {
   if (!id) {
-    const quote = await Quote.create({ body: JSON.stringify(editorState), user: client._id });
+    const quote = await Quote.create({ body: JSON.stringify(editorState), userFrom: client._id, html: editorHtml });
     client.emit('savedQuote', quote);
   }
-  await Quote.findByIdAndUpdate(id, { body: JSON.stringify(editorState) });
+  const quote = await Quote.findByIdAndUpdate(id, { body: JSON.stringify(editorState), html: editorHtml });
+  client.emit('updatedQuote', quote);
 };
 
 exports.createQuote = async (req, res) => {
-  const { body, collectionFrom, referenceFrom, imageUrl, pages } = req.body;
+  const { body, collectionFrom, referenceFrom, imageUrl, pages, name } = req.body;
   const { id: userFrom } = req.user;
-  const quote = await Quote.create({ body, collectionFrom, referenceFrom, imageUrl, pages, userFrom });
+  const quote = await Quote.create({ body, collectionFrom, referenceFrom, imageUrl, pages, userFrom, name });
 
   if (!quote) res.status(500).json({ msg: 'Something went wrong' });
   res.status(201).json(quote);

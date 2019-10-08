@@ -1,0 +1,27 @@
+.references {
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.references > h3 {
+  color: #444;
+}
+
+.reference-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #f1f3f4;
+  padding: 0.5rem;
+}
+
+.reference-item a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.reference-item svg {
+  color: #5f6368;
+}
