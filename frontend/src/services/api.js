@@ -1,12 +1,14 @@
 import io from 'socket.io-client';
 
-let socket = io.connect('http://localhost:3000', {
+const baseURL = process.env.NODE_ENV === 'production' ? 'https://atldan-minerva.herokuapp.com/' : 'http://localhost:3000/'
+
+let socket = io.connect(baseURL, {
   query: `token=${localStorage.token}`
 });
 
 
 function restartSocket() {
-  socket = io.connect('http://localhost:3000', {
+  socket = io.connect(baseURL, {
     query: `token=${localStorage.token}`
   });
 }
@@ -17,7 +19,7 @@ function subscribeToTimer(cb) {
 } 
 
 function signup(){
-  socket.emit('signup', { email: 'example@exmaple.com', password: '123'}, (error, user, token) => {
+  socket.emit('signup', { }, (error, user, token) => {
     if(error) console.log(error)
 
     localStorage.user = JSON.stringify(user)

@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const http = require('http');
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const socketio = require('socket.io');
@@ -42,6 +43,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(
   cors({

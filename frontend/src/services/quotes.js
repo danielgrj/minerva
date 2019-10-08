@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseURL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000/api/quotes';
+const baseURL = process.env.NODE_ENV === 'production' ? 'https://atldan-minerva.herokuapp.com/quotes' : 'http://localhost:3000/api/quotes';
 
 const SERVICE = axios.create({ baseURL, withCredentials: true })
 
