@@ -9,6 +9,7 @@
   width: 45rem;
   height: 68%;
   max-width: 95vw;
+  min-height: fit-content;
   background-color: #eee;
   padding: 5rem 4rem;
 }
