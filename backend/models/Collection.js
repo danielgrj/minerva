@@ -23,8 +23,7 @@ const colletionSchema = new Schema({
   ],
   pending: [
     {
-      type: String,
-      unique: true
+      type: String
     }
   ],
   quotes: [
