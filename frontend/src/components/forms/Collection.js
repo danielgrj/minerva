@@ -9,9 +9,7 @@ export default function Collection(props) {
   const [ isVisible, setIsVisible ] = useState(false)
   const [ collectionData, setCollectionData ] = useState({
     name: '',
-    defaultStyle: '',
-    contributors: [],
-    quotes: []
+    defaultStyle: ''
   })
 
   const {
