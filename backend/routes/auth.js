@@ -1,10 +1,12 @@
 const router = require('express').Router();
 const passport = require('./../config/passport');
-const { login, createUser, logout } = require('./../controllers/auth.controller');
+const { login, createUser, logout, updateUser } = require('./../controllers/auth.controller');
+const { isLoggedIn } = require('./../middleware');
 
 router.post('/login', passport.authenticate('local'), login);
 router.post('/signup', createUser);
 router.post('/logout', logout);
+router.post('/edit', isLoggedIn, updateUser);
 
 router.get('/facebook', passport.authenticate('facebook', { scope: ['email'], display: 'popup' }));
 router.get('/facebook/callback', (req, res, next) =>

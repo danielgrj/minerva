@@ -26,6 +26,12 @@ export default function Collection(props) {
 
   useEffect(() => {
     setIsVisible(true)
+
+    document.body.classList.add('block-scroll')
+
+    return () => {
+      document.body.classList.remove('block-scroll')
+    }
   }, [])
 
   useEffect(() => {
@@ -83,7 +89,7 @@ export default function Collection(props) {
               <label htmlFor="defaulStyle">Style</label>
               <select name="defaultStyle" id="defaultStyle" onChange={handleInput}>
                 {styles.map(({ _id, name }) => (
-                  <option value={_id}>{name}</option>
+                  <option key={_id} value={_id}>{name}</option>
                 ))}
               </select>
               <label htmlFor="quotes">Add quotes</label>

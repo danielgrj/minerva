@@ -65,6 +65,7 @@ exports.getAllReferences = async (req, res) => {
 exports.updateReference = async (req, res) => {
   const { id: _id } = req.params;
   const { id: userFrom } = req.user;
+  const { email } = req.body;
 
   const allowedUpdates = [
     'type',
@@ -88,6 +89,13 @@ exports.updateReference = async (req, res) => {
 
   for (const key in req.body) {
     if (allowedUpdates.includes(key)) reference[key] = req.body[key];
+  }
+
+  console.log(email);
+  if (email) {
+    const user = await User.findOne({ email });
+
+    if (user && user._id !== req.user._id) reference.contributors.push(user._id);
   }
 
   await reference.save();

@@ -10,7 +10,9 @@ export default class CollectionsProvider extends Component {
     currentCollection: {
       name: '',
       contributors: [],
-      quotes: []
+      pending: [],
+      quotes: [],
+      userFrom: ''
     },
     filtersCollections: {}
   }
@@ -20,7 +22,15 @@ export default class CollectionsProvider extends Component {
   }
 
   cleanCurrentCollection = () => {
-    this.setState({})
+    this.setState({
+      currentCollection: {
+        name: '',
+        contributors: [],
+        pending: [],
+        quotes: [],
+        userFrom: ''
+      }
+    })
   }
 
   getAllCollections = async () => {
@@ -43,6 +53,7 @@ export default class CollectionsProvider extends Component {
   }
 
   updateOneCollection = async (id, data) => {
+    console.log(data)
     const { data: newCollection } = await COLLECTIONS_SERVICE.updateCollection(id, data);
     this.setState(prevState => {
       const { collections: oldCollections } = prevState;

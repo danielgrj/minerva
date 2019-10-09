@@ -37,6 +37,12 @@ export default function Reference(props) {
 
   useEffect(() => {
     setIsVisible(true)
+
+    document.body.classList.add('block-scroll')
+
+    return () => {
+      document.body.classList.remove('block-scroll')
+    }
   }, [])
 
   useEffect(() => { 

@@ -16,6 +16,18 @@ exports.createUser = async (req, res) => {
   res.status(201).json({ user, token });
 };
 
+exports.updateUser = async (req, res) => {
+  const { email, name, password } = req.body;
+  const { id } = req.user;
+
+  const updates = { email, name, password };
+  if (req.file) updates.avatar = req.file.secure_url;
+
+  const user = await User.findByIdAndUpdate(id, updates);
+
+  res.status(201).json(user);
+};
+
 exports.logout = async (req, res) => {
   const { token } = req.body;
   await User.removeAuthToken(token);

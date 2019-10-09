@@ -115,7 +115,8 @@ export default class ReferencesProvider extends Component {
       createOneReference, 
       deleteOneReference, 
       updateOneReference, 
-      cleanCurrentReference
+      cleanCurrentReference,
+      deleteOneQuoteFromReference
      } = this
     return (
       <ReferencesContext.Provider 
@@ -128,7 +129,8 @@ export default class ReferencesProvider extends Component {
           createOneReference,
           updateOneReference,
           deleteOneReference,
-          cleanCurrentReference
+          cleanCurrentReference,
+          deleteOneQuoteFromReference
         }}
       >
         {this.props.children}

@@ -7,15 +7,23 @@ const colletionSchema = new Schema({
   },
   userFrom: {
     type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true
   },
   defaultStyle: {
-    type: Schema.Types.ObjectId
+    type: Schema.Types.ObjectId,
+    ref: 'Style'
   },
   contributors: [
     {
       type: Schema.Types.ObjectId,
       ref: 'User',
+      unique: true
+    }
+  ],
+  pending: [
+    {
+      type: String,
       unique: true
     }
   ],

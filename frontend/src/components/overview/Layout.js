@@ -19,6 +19,8 @@ import CollectionsProvider from './../../context/CollectionsContext'
 
 import './layout.css'
 import StylesProvider from '../../context/StylesContext'
+import DeleteCollection from './DeleteCollection'
+import Members from './Members'
 
 export default function Layout (props) {
   const [ isPlusActive, setIsPlusActive ] = useState(false);
@@ -33,14 +35,14 @@ export default function Layout (props) {
         <ReferencesProvider>
           <QuotesProvider>
             <div className="layout-container">
-              <Navbar />
+              <Navbar history={props.history} />
               <div className="layout">
                 <Collections />
                 <References />
                 <div className="main-content">
                   <Switch>
                     <Route exact path="/main" component={DefaultView} />
-                    <Route exact path="/main/collections/:id" component={CollectionOverview} />
+                    <Route path="/main/collections/:id" component={CollectionOverview} />
                     <Route exact path="/main/references/:id" component={ReferenceOverview} />
                   </Switch>
                   {/* <Quotes /> */}
@@ -73,6 +75,8 @@ export default function Layout (props) {
                   <Route exact path="/main/reference/:id/edit" component={Reference} />
                   <Route exact path="/main/collection/add" component={Collection} />
                   <Route exact path="/main/collection/:id/edit" component={Collection} />
+                  <Route exact path="/main/collections/:id/delete" component={DeleteCollection} />
+                  <Route exact path="/main/collections/:id/members" component={Members} />
                 </Switch>
               </div>
             </div>

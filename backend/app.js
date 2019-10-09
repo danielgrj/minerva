@@ -18,6 +18,8 @@ const quotesRoutes = require('./routes/quotes');
 const referencesRoutes = require('./routes/references');
 const stylesRoutes = require('./routes/styles');
 
+const { isLoggedIn } = require('./middleware');
+
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
@@ -46,22 +48,24 @@ app.use(passport.session());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cors());
-
-// credentials: true,
-//   origin: [
-//     'http://localhost:3001',
-//     'https://atldan-minerva.herokuapp.com/',
-//     'https://dreamy-cray-4695de.netlify.com/'
-//   ]
+app.use(
+  cors({
+    credentials: true,
+    origin: [
+      'http://localhost:3001',
+      'https://atldan-minerva.herokuapp.com/',
+      'https://dreamy-cray-4695de.netlify.com/'
+    ]
+  })
+);
 
 app.use('/api/auth', authRoutes);
-app.use('/api/files', filesRoutes);
-app.use('/api/collections', collectionsRoutes);
-app.use('/api/notes', notesRoutes);
-app.use('/api/quotes', quotesRoutes);
-app.use('/api/references', referencesRoutes);
-app.use('/api/styles', stylesRoutes);
+app.use('/api/files', isLoggedIn, filesRoutes);
+app.use('/api/collections', isLoggedIn, collectionsRoutes);
+app.use('/api/notes', isLoggedIn, notesRoutes);
+app.use('/api/quotes', isLoggedIn, quotesRoutes);
+app.use('/api/references', isLoggedIn, referencesRoutes);
+app.use('/api/styles', isLoggedIn, stylesRoutes);
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/index.html'));

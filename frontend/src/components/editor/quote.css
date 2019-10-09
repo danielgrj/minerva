@@ -9,11 +9,14 @@
 }
 
 .quote-container {
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
 }
 
 .quote {
@@ -141,4 +144,15 @@
 .quote-leave.quote-leave-active {
   transform: scale(0.1);
   transition: all 200ms ease-in-out;
+}
+
+@media only screen and (max-width: 56.25em) {
+  .quote-container {
+    align-items: flex-start;
+    padding: 12vh 0;
+  }
+
+  .quote {
+    max-width: 96vw;
+  }
 }

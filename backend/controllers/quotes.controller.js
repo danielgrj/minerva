@@ -20,7 +20,7 @@ exports.updateOneQuote = async (req, res) => {
 
   console.log(referenceFrom);
 
-  const quote = await Quote.findOneAndUpdate({ _id, userFrom }, { referenceFrom });
+  const quote = await Quote.findOneAndUpdate({ _id }, { referenceFrom });
 
   if (!quote) res.status(500).json({ msg: 'Something went wrong ' });
   console.log(quote);
@@ -40,7 +40,7 @@ exports.getOneQuote = async (req, res) => {
   const { id: _id } = req.params;
   const { id: userFrom } = req.user;
 
-  const quote = await Quote.findOne({ _id, userFrom });
+  const quote = await Quote.findOne({ _id });
 
   if (!quote) res.status(400).json({ msg: 'Not found' });
   res.status(200).json(quote);

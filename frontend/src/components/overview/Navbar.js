@@ -4,11 +4,21 @@ import { CSSTransitionGroup } from 'react-transition-group'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faSearch } from '@fortawesome/free-solid-svg-icons'
 
-import './navbar.css'
+import AUTH_SERVICE from './../../services/auth'
 
-export default function Navbar() {
+import './navbar.css'
+import Search from './Search'
+
+export default function Navbar(props) {
   const [isUsernavbarVisible, setIsUsernabarVisible] = useState(false)
   const user = JSON.parse(localStorage.user)
+
+  const logout = async () => {
+    await AUTH_SERVICE.logout()
+    localStorage.clear();
+    props.history.push('/')
+  }
+
   return (
     <>
       <nav className="navbar">
@@ -17,11 +27,11 @@ export default function Navbar() {
           <div className="minerva"><Link to="/main">Minerva</Link></div>
         </div>
         <div className="navbar-center">
-          <div className="search"><FontAwesomeIcon icon={faSearch} /><input type="text" placeholder="Search" /></div>
+          <Search />
         </div>
         <div className="navbar-right">
           <div className="avatar" onClick={() => setIsUsernabarVisible(!isUsernavbarVisible)}>
-            <img src="http://bion.com.ua/wp-content/uploads/2016/04/empty_avatar.jpg" alt="user" />
+            <img src={user.avatar} alt="user" />
           </div>
         </div>
       </nav>
@@ -35,7 +45,7 @@ export default function Navbar() {
             <h3>{user.name}</h3>
             <div className="session">
               <Link to="/profile">Profile</Link>
-              <button>Logout</button>
+              <button onClick={logout}>Logout</button>
             </div>
           </nav>
         : undefined }

@@ -1,4 +1,4 @@
-.collection-container {
+.delete-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6,14 +6,15 @@
   height: 100%;
 }
 
-.collection {
+.delete-card {
   z-index: 3;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.4);
   width: 50rem;
+  height: 30rem;
   max-height: 98%;
-  padding: 1.5rem;
+  padding: 2rem 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,31 +24,44 @@
   transition: all 0.2s ease-in-out;
 }
 
-.collection > input,
-.collection > select {
+.delete-card > input {
   border: none;
   background: none;
   background-color: #f1f3f4;
   padding: 1rem;
-  width: 75%;
+  width: 80%;
   margin-bottom: 2rem;
   border-radius: 5px;
   height: 3.5rem;
 }
 
-.collection > label {
-  width: 75%;
-  margin-bottom: 1rem;
+.delete-close {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
 }
 
-.collection > input[type='submit'] {
+.delete-close > button {
   border: none;
   background: none;
-  border-radius: 5px;
-  margin: 2rem 0;
+  font-size: 2rem;
+  color: #5f6368;
+}
+
+.delete-card > button {
+  border: none;
+  background: none;
+  border: 2px solid rgba(194, 24, 7);
+  color: rgba(194, 24, 7);
+  padding: 1rem 2rem;
   font-size: 1.4rem;
-  background-color: #e8b601;
-  color: #fff;
-  padding: 1rem;
-  width: 50%;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+
+.delete-card > button:disabled {
+  color: #ccc;
+  border: 2px solid #ddd;
+  cursor: default;
 }

@@ -32,6 +32,11 @@ export default function Quote (props){
 
   useEffect(() => {
     setIsVisible(true)
+    document.body.classList.add('block-scroll')
+
+    return () => {
+      document.body.classList.remove('block-scroll')
+    }
   }, [])
 
   useEffect(() => {

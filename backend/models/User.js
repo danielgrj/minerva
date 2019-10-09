@@ -13,6 +13,11 @@ const userSchema = new Schema(
       lowercase: true
     },
     name: String,
+    avatar: {
+      type: String,
+      default:
+        'https://res.cloudinary.com/dsira9sgt/image/upload/v1570590886/minerva/blank-profile-picture-973460_960_720_grwa1u.png'
+    },
     hash: {
       type: String,
       required: true

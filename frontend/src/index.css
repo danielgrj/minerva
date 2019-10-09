@@ -53,6 +53,24 @@ code {
   perspective: 1000px;
 }
 
+.menu-popup-enter {
+  opacity: 0.01;
+}
+
+.menu-popup-enter.menu-popup-enter-active {
+  opacity: 1;
+  transition: all 250ms ease-in-out;
+}
+
+.menu-popup-leave {
+  opacity: 1;
+}
+
+.menu-popup-leave.menu-popup-leave-active {
+  opacity: 0.01;
+  transition: all 200ms ease-in-out;
+}
+
 @keyframes shake {
   10%,
   90% {
