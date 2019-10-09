@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { CSSTransitionGroup } from 'react-transition-group'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,7 +11,11 @@ import Search from './Search'
 
 export default function Navbar(props) {
   const [isUsernavbarVisible, setIsUsernabarVisible] = useState(false)
-  const user = JSON.parse(localStorage.user)
+  const [ user, setUser ] = useState({})
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.user))
+  }, [])
 
   const logout = async () => {
     await AUTH_SERVICE.logout()

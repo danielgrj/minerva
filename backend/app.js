@@ -24,6 +24,16 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
+app.use(
+  cors({
+    credentials: true,
+    origin: [
+      'http://localhost:3001',
+      'https://atldan-minerva.herokuapp.com/',
+      'https://dreamy-cray-4695de.netlify.com/'
+    ]
+  })
+);
 mongoose
   .connect(process.env.DB, { useNewUrlParser: true })
   .then(res => {
@@ -47,17 +57,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(
-  cors({
-    credentials: true,
-    origin: [
-      'http://localhost:3001',
-      'https://atldan-minerva.herokuapp.com/',
-      'https://dreamy-cray-4695de.netlify.com/'
-    ]
-  })
-);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/files', isLoggedIn, filesRoutes);
