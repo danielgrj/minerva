@@ -27,7 +27,7 @@ export default function Navbar(props) {
           <div className="minerva"><Link to="/main">Minerva</Link></div>
         </div>
         <div className="navbar-center">
-          <Search />
+          {/* <Search /> */}
         </div>
         <div className="navbar-right">
           <div className="avatar" onClick={() => setIsUsernabarVisible(!isUsernavbarVisible)}>
