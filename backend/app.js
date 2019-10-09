@@ -24,16 +24,16 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-app.use(
-  cors({
-    credentials: true,
-    origin: [
-      'http://localhost:3001',
-      'https://atldan-minerva.herokuapp.com/',
-      'https://dreamy-cray-4695de.netlify.com/'
-    ]
-  })
-);
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: [
+//       'http://localhost:3001',
+//       'https://atldan-minerva.herokuapp.com/',
+//       'https://dreamy-cray-4695de.netlify.com/'
+//     ]
+//   })
+// );
 mongoose
   .connect(process.env.DB, { useNewUrlParser: true })
   .then(res => {
