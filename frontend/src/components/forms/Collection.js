@@ -90,10 +90,10 @@ export default function Collection(props) {
                   <option key={_id} value={_id}>{name}</option>
                 ))}
               </select>
-              <label htmlFor="quotes">Add quotes</label>
+              {/* <label htmlFor="quotes">Add quotes</label>
               <input type="text" name="quotes" id="quotes" />
               <label htmlFor="contributors">Add contributors</label>
-              <input type="text" name="contributors" id="contributors" />
+              <input type="text" name="contributors" id="contributors" /> */}
               <input type="submit" value="Save collection"/>
             </form>
           </div>

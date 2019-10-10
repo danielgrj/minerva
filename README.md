@@ -43,7 +43,7 @@ can use the following credentials.
   Password: 123
 
   User 2
-  Email: jojo@example.com
+  Email: jojo123@example.com
   Password: 123
 ```
 

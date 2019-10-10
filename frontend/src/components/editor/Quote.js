@@ -168,7 +168,7 @@ export default function Quote (props){
                   <div className="add-to-reference">
                     <select name="refrence" id="reference" >
                       {references.map(({_id, authors, title}) => (
-                        <option key={_id} value={_id}>{`${authors[0].lastName}, ${authors[0].lastName.charAt(0)}. ${title}`}</option>
+                        <option key={_id} value={_id}>{`${authors[0].lastName}, ${authors[0].firstName.charAt(0)}. ${title}`}</option>
                       ))}
                     </select>
                     <button onClick={setReference}>Set</button>

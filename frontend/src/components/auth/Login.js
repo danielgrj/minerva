@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
 import AUTH_SERVICE from './../../services/auth'
-import { restartSocket } from '../../services/api';
+import { restartSocket } from '../../services/editor';
 
 import './login.css'
 
