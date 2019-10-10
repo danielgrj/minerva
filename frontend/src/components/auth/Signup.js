@@ -64,6 +64,9 @@ export default function Signup (props) {
 
   const onSubmit = async (e) => {
     e.preventDefault()
+    
+    if(passwordError.notification || emailError.notification) return;
+
     const { data: { user, token } } = await AUTH_SERVICE.signup(userData)
     localStorage.user = JSON.stringify(user);
     localStorage.token = token

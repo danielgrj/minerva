@@ -17,10 +17,11 @@ import QuotesProvider from './../../context/QuotesContext'
 import ReferencesProvider from './../../context/ReferencesContext'
 import CollectionsProvider from './../../context/CollectionsContext'
 
-import './layout.css'
 import StylesProvider from '../../context/StylesContext'
 import DeleteCollection from './DeleteCollection'
 import Members from './Members'
+
+import './layout.css'
 
 export default function Layout (props) {
   const [ isPlusActive, setIsPlusActive ] = useState(false);

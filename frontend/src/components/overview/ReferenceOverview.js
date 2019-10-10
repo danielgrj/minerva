@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react'
-import Quotes from './Quotes';
 import { CSSTransitionGroup } from 'react-transition-group'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBook } from '@fortawesome/free-solid-svg-icons'
 
 import { ReferencesContext } from './../../context/ReferencesContext'
+import Quotes from './Quotes';
 
 export default function ReferenceOverview(props) {
   const [isVisible, setIsVisible] = useState(false)

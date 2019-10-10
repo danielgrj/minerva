@@ -14,7 +14,6 @@ export default function Members(props) {
 
   useEffect(() => {
     setIsVisible(true)
-    console.log(currentCollection)
   }, [currentCollection])
 
   const handleClose = () => {

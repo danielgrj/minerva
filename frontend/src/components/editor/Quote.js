@@ -12,13 +12,12 @@ import { QuotesContext } from '../../context/QuotesContext'
 import { ReferencesContext } from '../../context/ReferencesContext'
 import QUOTES_SERVICE from '../../services/quotes'
 
-import 'react-html5-camera-photo/build/css/index.css';
 import './quote.css'
 
 export default function Quote (props){
   const { addQuote, updateOneQuote } = useContext(QuotesContext)
   const { collections: allCollections, updateOneCollection, getAllCollections  } = useContext(CollectionsContext)
-  const { references } = useContext(ReferencesContext)
+  const { references, currentReference, getOneReference } = useContext(ReferencesContext)
 
   const [ id, setId ] = useState(props.match.params.id);
   const [ ocrText, setOcrText ] = useState(undefined);
@@ -26,12 +25,13 @@ export default function Quote (props){
   const [ isLoading, setIsLoading ] = useState(false);
   const [ isCameraActive, setIsCameraActive ] = useState(false);
   const [ isVisible, setIsVisible ] = useState(false)
+  const [ isFormatVisible, setIsFormatVisible ] = useState(false)
   const [ quote, setQuote ] = useState(undefined)
   const [ collections, setCollections] = useState(allCollections)
 
-
   useEffect(() => {
     setIsVisible(true)
+
     document.body.classList.add('block-scroll')
 
     return () => {
@@ -50,6 +50,10 @@ export default function Quote (props){
     }
   }, [quote, allCollections, addQuote, getAllCollections])
 
+  useEffect(() => {
+    if(quote) getOneReference(quote._id)
+  }, [quote])
+
   const handleGetDocument = async (cb) => {
     if(props.match.params.id) {
       const { data: quote } = await QUOTES_SERVICE.getOneQuote(id)
@@ -67,6 +71,8 @@ export default function Quote (props){
 
   const scanText = async (image) => {
     setIsLoading(true)
+
+    console.log(isLoading)
 
     const result = await Tesseract
       .recognize(image, 'eng')
@@ -134,8 +140,7 @@ export default function Quote (props){
                       <input type="file" onChange={handleAttachment} />
                     </div>
                     <button onClick={() => setIsCameraActive(true)}><FontAwesomeIcon icon={faCamera} /></button>
-                    <button><FontAwesomeIcon icon={faBook} /></button>
-                    {isLoading ? <div className="spin-circle"></div> : undefined}
+                    <button onClick={() => setIsFormatVisible(!isFormatVisible)}><FontAwesomeIcon icon={faBook} /></button>
                   </div>
                   {renderImage()}
                 </div>
@@ -172,8 +177,15 @@ export default function Quote (props){
                   </div>
                 </div>
               : undefined}
+              
+                { isLoading ? 
+                <div className="loading-sect">
+                  <div className="spin-circle"></div>
+                </div>
+                : undefined }
+              
             </div>
-            { isCameraActive ? <Camera onTakePhoto={handlePhoto} isFullscreen={true} /> : undefined }
+            {isCameraActive ? <Camera className="camera-quote" onTakePhoto={handlePhoto} isFullscreen={true} isImageMirror={false} /> : undefined }
           </div> 
         : undefined }
       </CSSTransitionGroup>

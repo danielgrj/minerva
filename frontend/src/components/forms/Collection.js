@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { CSSTransitionGroup } from 'react-transition-group'
 import { CollectionsContext } from '../../context/CollectionsContext'
+import { StylesContext } from '../../context/StylesContext'
 
 import './collection.css'
-import { StylesContext } from '../../context/StylesContext'
 
 export default function Collection(props) {
   const [ isVisible, setIsVisible ] = useState(false)

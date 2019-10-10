@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { CSSTransitionGroup } from 'react-transition-group'
+import { ReferencesContext } from '../../context/ReferencesContext'
 
 import './reference.css'
-import { ReferencesContext } from '../../context/ReferencesContext'
 
 
 

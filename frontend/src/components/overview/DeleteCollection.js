@@ -17,12 +17,6 @@ export default function DeleteCollection(props) {
     console.log('mounting')
   }, [])
 
-  // useEffect(() => {
-  //   if(name === currentCollection.name){
-  //     document.querySelector('#delete').disabled
-  //   }
-  // })
-
   const handleClose = () => {
     setIsVisible(false);
     setTimeout(() => {
