@@ -8,6 +8,8 @@ import './reference.css'
 
 export default function Reference(props) {
   const [ isVisible, setIsVisible ] = useState(false)
+  const [ canDelete, setCanDelete ] = useState(false)
+
   const [ referenceData, setReferenceData ] = useState({
     type: 'BOOK',
     title: '',
@@ -32,7 +34,8 @@ export default function Reference(props) {
     getOneReference, 
     createOneReference, 
     updateOneReference, 
-    cleanCurrentReference 
+    cleanCurrentReference,
+    deleteOneReference
   } = useContext(ReferencesContext)
 
   useEffect(() => {
@@ -48,6 +51,7 @@ export default function Reference(props) {
   useEffect(() => { 
     if ((!referenceData._id && props.match.params.id) || referenceData._id !== props.match.params.id) {
       getOneReference(props.match.params.id)
+      setCanDelete(true)
 
       for(const key in currentReference) {
         if (currentReference[key] === null) currentReference[key] = ''
@@ -63,6 +67,15 @@ export default function Reference(props) {
 
   const handleInput = (e) => {
     setReferenceData({ ...referenceData, [e.target.name]: e.target.value });
+  }
+
+  const handleDelete = async () => {
+    try {
+      await deleteOneReference(referenceData._id)
+      props.history.goBack()
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   const onSubmit = async (e) => {
@@ -108,6 +121,10 @@ export default function Reference(props) {
         {isVisible ? 
           <div className="reference-container">
             <form className="reference" onSubmit={onSubmit}>
+
+              {canDelete ? 
+                <div className="delete-reference"><button onClick={handleDelete}>Delete</button></div>
+               : undefined}
               <h2>{props.match.params.id ? 'Edit reference' : 'Add reference'}</h2>
               <select name="type" id="type">
                 <option value="BOOK">Book</option>

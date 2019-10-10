@@ -17,11 +17,10 @@ import './quote.css'
 export default function Quote (props){
   const { addQuote, updateOneQuote } = useContext(QuotesContext)
   const { collections: allCollections, updateOneCollection, getAllCollections  } = useContext(CollectionsContext)
-  const { references, currentReference, getOneReference } = useContext(ReferencesContext)
+  const { references, getOneReference } = useContext(ReferencesContext)
 
   const [ id, setId ] = useState(props.match.params.id);
   const [ ocrText, setOcrText ] = useState(undefined);
-  const [ imageUrl, setImageUrl ] = useState('');
   const [ isLoading, setIsLoading ] = useState(false);
   const [ isCameraActive, setIsCameraActive ] = useState(false);
   const [ isVisible, setIsVisible ] = useState(false)
@@ -52,7 +51,7 @@ export default function Quote (props){
 
   useEffect(() => {
     if(quote) getOneReference(quote._id)
-  }, [quote])
+  }, [quote, getOneReference])
 
   const handleGetDocument = async (cb) => {
     if(props.match.params.id) {
@@ -71,8 +70,6 @@ export default function Quote (props){
 
   const scanText = async (image) => {
     setIsLoading(true)
-
-    console.log(isLoading)
 
     const result = await Tesseract
       .recognize(image, 'eng')
@@ -101,22 +98,24 @@ export default function Quote (props){
     }
   }
 
-  const setCollection = () => {
+  const setCollection = async () => {
     const id = document.querySelector('#collection').value;
     const collection = collections.find((currentCollection) => currentCollection._id === id)
 
+    setIsLoading(true);
+
     collection.quotes.push(quote._id)
-    updateOneCollection(id, collection)
+    await updateOneCollection(id, collection)
+
+    setIsLoading(false)
   }
 
-  const setReference = () => {
+  const setReference = async () => {
     const referenceFrom = document.querySelector('#reference').value;
     
-    updateOneQuote(quote._id, {referenceFrom})
-  }
-
-  const renderImage = () => {
-    if (imageUrl) return <div><img src={imageUrl} alt="attached" /></div>
+    setIsLoading(true);
+    await updateOneQuote(quote._id, {referenceFrom})
+    setIsLoading(false)
   }
 
   return (
@@ -142,7 +141,6 @@ export default function Quote (props){
                     <button onClick={() => setIsCameraActive(true)}><FontAwesomeIcon icon={faCamera} /></button>
                     <button onClick={() => setIsFormatVisible(!isFormatVisible)}><FontAwesomeIcon icon={faBook} /></button>
                   </div>
-                  {renderImage()}
                 </div>
                 <Editor
                   handleSaved={savedQuote}

@@ -67,11 +67,9 @@ export default function Signup (props) {
     
     if(passwordError.notification || emailError.notification) return;
 
-    const { data: { user, token } } = await AUTH_SERVICE.signup(userData)
-    localStorage.user = JSON.stringify(user);
-    localStorage.token = token
+    await AUTH_SERVICE.signup(userData)
     setIsVisible(false)
-    setTimeout(() => props.history.push('/'), 200)
+    setTimeout(() => props.history.push('/login'), 200)
   }
 
 

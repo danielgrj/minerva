@@ -60,3 +60,21 @@
   color: #fff;
   padding: 1rem;
 }
+
+.delete-reference {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.delete-reference > button {
+  border: none;
+  background: none;
+  background-color: rgba(194, 24, 7, 0.8);
+  color: #eee;
+  padding: 1rem 2rem;
+  font-size: 1.6rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
