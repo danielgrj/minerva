@@ -41,7 +41,7 @@ export default function Login (props) {
       restartSocket(token)
       props.history.push('/main');
     } catch (e) {
-      if (e.response.status === 401) setNetworkError({ networkError: { className: 'error-animation', notification: <div className="error-network">Incorrect email or passwor</div> } })
+      if (e.status === 401) setNetworkError({ networkError: { className: 'error-animation', notification: <div className="error-network">Incorrect email or passwor</div> } })
       setNetworkError({ networkError: { className: 'error-animation', notification: <div className="error-network">Something went wrong on the server</div> } })
     }
   }

@@ -44,6 +44,23 @@
   margin-bottom: 3rem;
 }
 
+.members-result {
+  display: flex;
+  justify-content: center;
+  width: 65%;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+}
+
+.error {
+  border: 2px solid rgb(255, 36, 0);
+}
+
+.success {
+  border: 2px solid #23d160;
+}
+
 .members-header > svg {
   font-size: 5.2rem;
   color: #5f6368;

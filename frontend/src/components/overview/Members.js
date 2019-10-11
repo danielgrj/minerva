@@ -9,6 +9,7 @@ import './members.css'
 export default function Members(props) {
   const [ isVisible, setIsVisible ] = useState(false)
   const [ email, setEmail ] = useState('')
+  const [ result, setResult ] = useState(undefined)
 
   const { currentCollection, updateOneCollection } = useContext(CollectionsContext)
 
@@ -23,8 +24,16 @@ export default function Members(props) {
     }, 200)
   }
 
-  const handleAddUser = () => {
-    updateOneCollection(currentCollection._id, { email })
+  const handleAddUser = async () => {
+    if(!email) return
+    try {
+      await updateOneCollection(currentCollection._id, { email })
+      setResult(<div className="members-result success">Collection shared with {email}</div>)
+    } catch (e) {
+      console.log(e.status)
+      setResult(<div className="members-result error">User not found</div>)
+    }
+
   }
 
   return (
@@ -48,6 +57,7 @@ export default function Members(props) {
                 <input type="text" value={email} onChange={(e) => setEmail(e.target.value)}/>
                 <button onClick={handleAddUser}><FontAwesomeIcon icon={faUserPlus} /></button>
               </div>
+              {result}
               <div className="members-list">
                 <div>
                   <h3>Creator</h3>
