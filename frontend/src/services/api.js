@@ -14,21 +14,5 @@ function restartSocket() {
   });
 }
 
-function subscribeToTimer(cb) {
-  socket.on('timer', timestamp => cb(null, timestamp));
-  socket.emit('subscribeToTimer', 1000);
-} 
-
-function signup(){
-  socket.emit('signup', { }, (error, user, token) => {
-    if(error) console.log(error)
-
-    localStorage.user = JSON.stringify(user)
-    localStorage.token = `Bearer ${token}`
-  })
-}
-
-
-
 export { subscribeToTimer, signup, restartSocket };
 export default socket
