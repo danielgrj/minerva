@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render landing page correctly 1`] = `
+<div
+  className="container container--landing"
+>
+  <div
+    className="slogan"
+  >
+    <h1>
+      Minerva
+    </h1>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo, tempora optio aspernatur sapiente quae natus enim recusandae minima delectus ducimus! Aperiam, nisi animi tempora porro veniam facilis corrupti eaque harum!
+  </div>
+  <div
+    className="identify"
+  >
+    <Link
+      className="signup"
+      to="/signup"
+    >
+      Signup
+    </Link>
+    <Link
+      className="login"
+      to="/login"
+    >
+      Login
+    </Link>
+  </div>
+</div>
+`;
