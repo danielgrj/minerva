@@ -49,7 +49,7 @@ exports.updateCollection = async (req, res) => {
   if (email) {
     const user = await User.findOne({ email });
 
-    if (!user) return res.status(404).json({msg: 'User not found'})
+    if (!user) return res.status(404).json({ msg: 'User not found' });
     if (user._id !== req.user._id) updates['$push'] = { contributors: user._id };
   }
 

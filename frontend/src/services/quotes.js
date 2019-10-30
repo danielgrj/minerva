@@ -1,7 +1,7 @@
 import axios from 'axios';
 const baseURL = process.env.NODE_ENV === 'production' ? 'https://atldan-minerva.herokuapp.com/api/quotes' : 'http://localhost:3000/api/quotes';
 
-const SERVICE = axios.create({ baseURL, withCredentials: true })
+const SERVICE = axios.create({ baseURL, withCredentials: true });
 
 const QUOTES_SERVICE = {
   createQuote: (quote) => SERVICE.post('/', quote),

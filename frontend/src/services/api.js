@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 
-const baseURL = process.env.NODE_ENV === 'production' ? 'https://atldan-minerva.herokuapp.com/' : 'http://localhost:3000/'
+const baseURL = process.env.NODE_ENV === 'production' ? 'https://atldan-minerva.herokuapp.com/' : 'http://localhost:3000/';
 
 let socket = io.connect(baseURL, {
   query: `token=${localStorage.token}`,
@@ -15,4 +15,4 @@ function restartSocket() {
 }
 
 export { subscribeToTimer, signup, restartSocket };
-export default socket
+export default socket;
