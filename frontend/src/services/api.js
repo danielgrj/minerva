@@ -14,5 +14,5 @@ function restartSocket() {
   });
 }
 
-export { subscribeToTimer, signup, restartSocket };
+export { subscribeToTimer, restartSocket };
 export default socket;
