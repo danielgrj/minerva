@@ -9,7 +9,8 @@ const referenceSchema = new Schema(
     },
     title: {
       type: String,
-      required: true
+      required: true,
+      trim: true
     },
     authors: [
       {

@@ -3,7 +3,9 @@ const { model, Schema } = require('mongoose');
 const styleSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    uppercase: true,
+    trim: true
   },
   model: {
     type: String,

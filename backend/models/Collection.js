@@ -3,6 +3,7 @@ const { model, Schema } = require('mongoose');
 const colletionSchema = new Schema({
   name: {
     type: String,
+    trim: true,
     required: true
   },
   userFrom: {
