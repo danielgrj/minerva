@@ -11,7 +11,6 @@ const passport = require('./config/passport');
 const cors = require('cors');
 
 const authRoutes = require('./routes/auth');
-const filesRoutes = require('./routes/files');
 const collectionsRoutes = require('./routes/collections');
 const notesRoutes = require('./routes/notes');
 const quotesRoutes = require('./routes/quotes');
@@ -60,7 +59,6 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/auth', authRoutes);
-app.use('/api/files', isLoggedIn, filesRoutes);
 app.use('/api/collections', isLoggedIn, collectionsRoutes);
 app.use('/api/notes', isLoggedIn, notesRoutes);
 app.use('/api/quotes', isLoggedIn, quotesRoutes);
