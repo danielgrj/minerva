@@ -77,13 +77,6 @@ const { updateQuote } = require('./controllers/quotes.controller');
 
 io.on('connection', client => {
   client.on('editQuote', updateQuote(client));
-
-  client.on('subscribeToTimer', interval => {
-    console.log('client is subscribing to timer with interval ', interval);
-    setInterval(() => {
-      client.emit('timer', new Date());
-    }, interval);
-  });
 });
 
 server.listen(process.env.PORT, () => {
