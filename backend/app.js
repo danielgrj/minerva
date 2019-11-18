@@ -26,11 +26,7 @@ const io = socketio(server);
 app.use(
   cors({
     credentials: true,
-    origin: [
-      'http://localhost:3001',
-      'https://atldan-minerva.herokuapp.com/',
-      'https://dreamy-cray-4695de.netlify.com/'
-    ]
+    origin: process.env.ORIGIN
   })
 );
 
