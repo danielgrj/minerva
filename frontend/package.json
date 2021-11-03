@@ -24,7 +24,7 @@
     "react-transition-group": "1.x",
     "socket.io-client": "^2.3.0",
     "tesseract.js": "^1.0.19",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "scripts": {
     "start": "react-scripts start",
